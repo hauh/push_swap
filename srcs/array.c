@@ -6,11 +6,28 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 17:00:23 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/13 17:16:58 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/14 19:48:58 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void	mark_stack(t_stack *a, int *arr, int size)
+{
+	int i;
+	int *arr0;
+
+	i = 1;
+	arr0 = arr;
+	while (size--)
+	{
+		while (a->n != *arr)
+			a = a->right;
+		a->place = i++;
+		++arr;
+	}
+	free(arr0);
+}
 
 void	sort_array(int *begin, int *end)
 {

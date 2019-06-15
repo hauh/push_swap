@@ -6,13 +6,12 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 20:17:48 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/13 23:14:50 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/15 22:32:31 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-char *g_coms = NULL;
 int	g_count = 0;
 
 void	checker(t_stack **a)
@@ -25,27 +24,43 @@ void	checker(t_stack **a)
 	{
 //		ft_printf("%s ", coms);
 		if (ft_strequ(coms, "sa"))
-			swap(a);
+			swap(a, NULL);
 		else if (ft_strequ(coms, "sb"))
-			swap(&b);
+			swap(&b, NULL);
+		else if (ft_strequ(coms, "ss"))
+		{
+			swap(a, NULL);
+			swap(&b, NULL);
+		}
 		else if (ft_strequ(coms, "ra"))
-			rotate(a);
+			rotate(a, NULL);
 		else if (ft_strequ(coms, "rb"))
-			rotate(&b);
+			rotate(&b, NULL);
+		else if (ft_strequ(coms, "rr"))
+		{
+			rotate(a, NULL);
+			rotate(&b, NULL);
+		}
 		else if (ft_strequ(coms, "rra"))
-			reverse(a);
+			reverse(a, NULL);
 		else if (ft_strequ(coms, "rrb"))
-			reverse(&b);
+			reverse(&b, NULL);
+		else if (ft_strequ(coms, "rrr"))
+		{
+			reverse(a, NULL);
+			reverse(&b, NULL);
+		}
 		else if (ft_strequ(coms, "pa"))
-			push(&b, a);
+			push(&b, a, NULL);
 		else if (ft_strequ(coms, "pb"))
-			push(a, &b);
+			push(a, &b, NULL);
 		else
 		{
-			write(1, "Error\n", 6);
+			write(1, "{yellow}Error\n", 6);
 			exit(-1);
 		}
 		free(coms);
+//	print_stack(*a, b);
 	}
 //	ft_printf("\n", coms);
 }
@@ -59,9 +74,7 @@ int	main(int argc, char **argv)
 		return (-1);
 	size = 1;
 	a = store_stack(argc - 1, argv + 1, &size);
-//	print_stack(a, b);
 	checker(&a);
 	ft_printf(is_sorted(a, size) ? "OK\n" : "KO\n");
-//	print_stack(a, b);
 	return (0);
 }

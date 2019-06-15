@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 14:40:26 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/13 22:51:33 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/15 22:10:33 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,18 @@
 # include <stdlib.h>
 # include "libft/libft.h"
 # include "get_next_line/get_next_line.h"
+
+# define SA 11
+# define RA 12
+# define RRA 13
+# define SB 21
+# define RB 22
+# define RRB 23
+# define SS 31
+# define RR 33
+# define RRR 34
+# define PA 41
+# define PB 42
 
 typedef struct	s_stack
 {
@@ -28,22 +40,26 @@ typedef struct	s_stack
 }				t_stack;
 
 extern int g_count;
-extern char *g_coms;
 
 int				check_args(int argc, char **argv);
-int				*get_array(int argc, char **argv);
-void			sort_array(int *begin, int *end);
 t_stack			*new_stack(int n);
 t_stack			*store_stack(int argc, char **argv, int *size);
+int				*get_array(int argc, char **argv);
+void			sort_array(int *begin, int *end);
+void			mark_stack(t_stack *a, int *arr, int size);
 void			print_stack(t_stack *a, t_stack *b);
-void			swap(t_stack **st);
-void			push(t_stack **a, t_stack **b);
-void			rotate(t_stack **st);
-void			reverse(t_stack **st);
+void			swap(t_stack **st, int **coms);
+void			push(t_stack **a, t_stack **b, int **coms);
+void			rotate(t_stack **st, int **coms);
+void			reverse(t_stack **st, int **coms);
 int				is_sorted(t_stack *s, int size);
-void			split_a(t_stack **a, t_stack **b, int median, int size);
-void			solve_3(t_stack **s);
-void			solve_5(t_stack **a, t_stack **b, int size);
+int				find_lowest(t_stack *a);
+int				find_highest(t_stack *a);
+void			split_a(t_stack **a, t_stack **b, int size, int **coms);
+void			solve_3(t_stack **s, int **coms);
+void			solve_5_a(t_stack **a, t_stack **b, int size, int **coms);
+void			solve_5_b(t_stack **a, t_stack **b, int size, int **coms);
+void			optimize_coms(int *coms);
 int				ft_printf(const char *format, ...);
 
 #endif

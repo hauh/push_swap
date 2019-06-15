@@ -6,39 +6,52 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 14:35:30 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/12 22:10:11 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/15 18:10:45 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	swap(t_stack **s)
+void	swap(t_stack **s, int **coms)
 {
 	if (*s && *s != (*s)->right)
 	{
-		g_coms = ft_strjoin(g_coms, (*s)->ab == 'a' ? "sa\n" : "sb\n");
+		if (coms)
+			*((*coms)++) = ((*s)->ab == 'a' ? SA : SB);
 		++g_count;
-		(*s)->right->right->left = *s;
-		(*s)->left->right = (*s)->right;
-		(*s)->right->left = (*s)->left;
-		(*s)->right = (*s)->right->right;
-		(*s)->left->right->right = *s;
-		(*s)->left = (*s)->left->right;
+		if ((*s)->right->right != *s)
+		{
+			(*s)->right->right->left = *s;
+			(*s)->left->right = (*s)->right;
+			(*s)->right->left = (*s)->left;
+			(*s)->right = (*s)->right->right;
+			(*s)->left->right->right = *s;
+			(*s)->left = (*s)->left->right;
+		}
 		(*s)->head = 0;
 		*s = (*s)->left;
 		(*s)->head = 1;
 	}
 }
 
-void	push(t_stack **a, t_stack **b)
+void	push(t_stack **a, t_stack **b, int **coms)
 {
 	t_stack *tmp;
 
 	if (*a)
 	{
-		g_coms = ft_strjoin(g_coms, (*a)->ab == 'a' ? "pb\n" : "pa\n");
-		(*a)->ab = ((*a)->ab == 'a' ? 'b' : 'a');
+		if (coms)
+		{
+			if (((*a)->ab == 'a' && *(*coms - 1) == PA) || ((*a)->ab == 'b' && *(*coms - 1) == PB))
+			{
+				--(*coms);
+				**coms = 0;
+			}
+			else
+				*((*coms)++) = ((*a)->ab == 'a' ? PB : PA);
+		}
 		++g_count;
+		(*a)->ab = ((*a)->ab == 'a' ? 'b' : 'a');
 		tmp = (*a == (*a)->right ? NULL : (*a)->right);
 		(*a)->right->left = (*a)->left;
 		(*a)->left->right = (*a)->right;
@@ -61,11 +74,12 @@ void	push(t_stack **a, t_stack **b)
 	}
 }
 
-void	rotate(t_stack **s)
+void	rotate(t_stack **s, int **coms)
 {
 	if (*s && (*s)->right != *s)
 	{
-		g_coms = ft_strjoin(g_coms, (*s)->ab == 'a' ? "ra\n" : "rb\n");
+		if (coms)
+			*((*coms)++) = ((*s)->ab == 'a' ? RA : RB);
 		++g_count;
 		(*s)->head = 0;
 		(*s) = (*s)->right;
@@ -73,11 +87,12 @@ void	rotate(t_stack **s)
 	}
 }
 
-void	reverse(t_stack **s)
+void	reverse(t_stack **s, int **coms)
 {
 	if (*s && (*s)->left != *s)
 	{
-		g_coms = ft_strjoin(g_coms, (*s)->ab == 'a' ? "rra\n" : "rrb\n");
+		if (coms)
+			*((*coms)++) = ((*s)->ab == 'a' ? RRA : RRB);
 		++g_count;
 		(*s)->head = 0;
 		(*s) = (*s)->left;

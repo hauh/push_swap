@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 16:43:58 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/13 22:46:19 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/15 19:50:03 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,50 @@ int		is_sorted(t_stack *s, int size)
 	r = s;
 	r = r->right;
 	--size;
-	while (r != s)
+	while (r != s && r->n > r->left->n)
 	{
-		if (r->n < r->left->n)
-			return (0);
 		r = r->right;
 		--size;
 	}
 	if (size != 0)
 		return (0);
 	return (1);
+}
+
+int find_lowest(t_stack *a)
+{
+	int low;
+	
+	low = 0;
+	if (a)
+	{
+		low = a->place;
+		a = a->right;
+		while (!a->head)
+		{
+			if (a->place < low)
+				low = a->place;
+			a = a->right;
+		}
+	}
+	return (low);
+}
+
+int find_highest(t_stack *a)
+{
+	int high;
+	
+	high = 0;
+	if (a)
+	{
+		high = a->place;
+		a = a->right;
+		while (!a->head)
+		{
+			if (a->place > high)
+				high = a->place;
+			a = a->right;
+		}
+	}
+	return (high);
 }

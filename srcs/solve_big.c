@@ -6,13 +6,13 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 22:15:20 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/16 00:06:42 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/17 23:44:15 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int		where_to(t_stack *s, int place)
+static int		where_to(t_stack *s, int place)
 {
 	t_stack	*rotate;
 	int		direction;
@@ -33,30 +33,12 @@ int		where_to(t_stack *s, int place)
 	return (direction);
 }
 
-int stack_size(t_stack *a)
-{
-	int size;
-	
-	size = 0;
-	if (a)
-	{
-		++size;
-		a = a->right;
-		while (!a->head)
-		{
-			++size;
-			a = a->right;
-		}
-	}
-	return (size);
-}
-
 void	solve_b(t_stack **a, t_stack **b, int size, int **coms)
 {
 	int start;
 	int end;
 
-	start = find_lowest(*b);
+	start = find_lowest(*b, size);
 	end = start + size - 1;
 	while (start <= end)
 	{
@@ -139,7 +121,7 @@ void	solve_a(t_stack **a, t_stack **b, int size, int **coms)
 	int start;
 	int end;
 
-	start = find_highest(*b);
+	start = find_highest(*b, size);
 	end = start - size + 1;
 	while (start >= end)
 	{
@@ -193,9 +175,12 @@ void	split_a(t_stack **a, t_stack **b, int size, int **coms)
 {
 	int s;
 	int median;
+	int flag = 0;
 
+	if (!*b)
+		flag = 1;
 	s = size / 2;
-	median = find_lowest(*a) + s;
+	median = find_lowest(*a, size) + s;
 	if (size > 5)
 	{
 		while (s)
@@ -204,6 +189,8 @@ void	split_a(t_stack **a, t_stack **b, int size, int **coms)
 			{
 				push(a, b, coms);
 				--s;
+				if ((*b)->place < median / 4 && (*b)->place != (*b)->right->place)
+					rotate(b, coms);
 			}
 			else
 				rotate(a, coms);

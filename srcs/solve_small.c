@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 22:20:39 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/15 20:29:00 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/17 19:09:24 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	solve_5_a(t_stack **a, t_stack **b, int size, int **coms)
 	if (!is_sorted(*a, size))
 	{
 		i = (size == 5 ? 2 : 1);
-		t = find_lowest(*a) + i - 1;
+		t = find_lowest(*a, size) + i - 1;
 		while (i)
 		{
 			if ((*a)->place <= t)

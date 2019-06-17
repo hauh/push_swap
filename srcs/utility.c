@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 16:43:58 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/15 19:50:03 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/17 23:43:45 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int		is_sorted(t_stack *s, int size)
 	return (1);
 }
 
-int find_lowest(t_stack *a)
+int find_lowest(t_stack *a, int size)
 {
 	int low;
 	
@@ -59,18 +59,17 @@ int find_lowest(t_stack *a)
 	if (a)
 	{
 		low = a->place;
-		a = a->right;
-		while (!a->head)
+		while (--size)
 		{
+			a = a->right;
 			if (a->place < low)
 				low = a->place;
-			a = a->right;
 		}
 	}
 	return (low);
 }
 
-int find_highest(t_stack *a)
+int find_highest(t_stack *a, int size)
 {
 	int high;
 	
@@ -78,13 +77,30 @@ int find_highest(t_stack *a)
 	if (a)
 	{
 		high = a->place;
-		a = a->right;
-		while (!a->head)
+		while (--size)
 		{
+			a = a->right;
 			if (a->place > high)
 				high = a->place;
-			a = a->right;
 		}
 	}
 	return (high);
+}
+
+int stack_size(t_stack *a)
+{
+	int size;
+	
+	size = 0;
+	if (a)
+	{
+		++size;
+		a = a->right;
+		while (!a->head)
+		{
+			++size;
+			a = a->right;
+		}
+	}
+	return (size);
 }

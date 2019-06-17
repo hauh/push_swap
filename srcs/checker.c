@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 20:17:48 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/15 22:32:31 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/17 23:53:10 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ void	checker(t_stack **a)
 			push(a, &b, NULL);
 		else
 		{
-			write(1, "{yellow}Error\n", 6);
+			write(1, "Error\n", 6);
 			exit(-1);
 		}
 		free(coms);
 //	print_stack(*a, b);
 	}
-//	ft_printf("\n", coms);
+//	ft_printf("%d\n", count);
 }
 
 int	main(int argc, char **argv)

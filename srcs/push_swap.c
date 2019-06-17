@@ -25,9 +25,10 @@ void	solve(t_stack **a, t_stack **b, int size, int *coms)
 	else if (size <= 5)
 		solve_5_a(a, b, size, &p);
 	else
-		split_a(a, b, size, &p);
-	while (*b)
-		push(b, a, &p);
+		quicksort_ascending(a, b, size, &p);
+//		split_a(a, b, size, &p);
+//	while (*b)
+//		push(b, a, &p);
 	*p = -1;
 }
 
@@ -79,7 +80,7 @@ int		main(int argc, char **argv)
 	mark_stack(a, arr, size);
 	coms = (int *)malloc(sizeof(int) * (size * size + 1));
 	solve(&a, &b, size, coms);
-	print_stack(a, b);
+//	print_stack(a, b);
 //	print_coms(coms);
 /*	int c = 0;
 	int i = 0;
@@ -92,16 +93,16 @@ int		main(int argc, char **argv)
 	ft_printf("coms %d ", c);*/
 //	ft_printf("%d\n", g_count);
 	optimize_coms(coms);
-/*	print_stack(a, b);
-	i = 0;
-	c = 0;
+//	print_stack(a, b);
+	int i = 0;
+	int c = 0;
 	while (coms[i] != -1)
 	{
 		if (coms[i] != 0)
 			++c;
 		i++;
-	}*/
-//	print_coms(coms);
+	}
+	print_coms(coms);
 //	ft_printf("coms new %d\n", c);
 	free(coms);
 	return (0);

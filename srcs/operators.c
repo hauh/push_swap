@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 14:35:30 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/17 17:03:41 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/22 18:58:59 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,15 @@ void	swap(t_stack **s, int **coms)
 	if (*s && *s != (*s)->right)
 	{
 		if (coms)
-			*((*coms)++) = ((*s)->ab == 'a' ? SA : SB);
+		{
+			if (((*s)->ab == 'a' && *(*coms - 1) == SA) || ((*s)->ab == 'b' && *(*coms - 1) == SB))
+			{
+				--(*coms);
+				**coms = 0;
+			}
+			else
+				*((*coms)++) = ((*s)->ab == 'a' ? SA : SB);
+		}
 		++g_count;
 		if ((*s)->right->right != *s)
 		{
@@ -79,7 +87,16 @@ void	rotate(t_stack **s, int **coms)
 	if (*s && (*s)->right != *s)
 	{
 		if (coms)
-			*((*coms)++) = ((*s)->ab == 'a' ? RA : RB);
+		{
+			if (((*s)->ab == 'a' && *(*coms - 1) == RRA) || ((*s)->ab == 'b' && *(*coms - 1) == RRB))
+			{
+				--(*coms);
+				**coms = 0;
+//				*(--*coms) = 0;
+			}
+			else
+				*((*coms)++) = ((*s)->ab == 'a' ? RA : RB);
+		}
 		++g_count;
 		(*s)->head = 0;
 		(*s) = (*s)->right;
@@ -92,7 +109,15 @@ void	reverse(t_stack **s, int **coms)
 	if (*s && (*s)->left != *s)
 	{
 		if (coms)
-			*((*coms)++) = ((*s)->ab == 'a' ? RRA : RRB);
+		{
+			if (((*s)->ab == 'a' && *(*coms - 1) == RA) || ((*s)->ab == 'b' && *(*coms - 1) == RB))
+			{
+				--(*coms);
+				**coms = 0;
+			}
+			else
+				*((*coms)++) = ((*s)->ab == 'a' ? RRA : RRB);
+		}
 		++g_count;
 		(*s)->head = 0;
 		(*s) = (*s)->left;

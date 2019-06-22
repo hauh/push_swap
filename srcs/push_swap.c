@@ -14,21 +14,25 @@
 
 int g_count = 0;
 
-void	solve(t_stack **a, t_stack **b, int size, int *coms)
+void	sort(t_stack **a, int size, int *coms)
 {
-	int *p;
+	t_stack	*b;
+	int		*p;
 
 	p = coms;
 	*p++ = 0;
+	b = NULL;
 	if (size <= 3)
 		solve_3(a, &p);
 	else if (size <= 5)
-		solve_5_a(a, b, size, &p);
+		solve_5_a(a, &b, size, &p);
+	else if (size <= 100)
+		sort_100(a, &b, size, &p);
 	else
-		quicksort_ascending(a, b, size, &p);
+		quicksort_ascending(a, &b, size, &p);
 //		split_a(a, b, size, &p);
 //	while (*b)
-//		push(b, a, &p);
+//		push(b, a, &p);*/
 	*p = -1;
 }
 
@@ -79,9 +83,13 @@ int		main(int argc, char **argv)
 	sort_array(arr, arr + size - 1);
 	mark_stack(a, arr, size);
 	coms = (int *)malloc(sizeof(int) * (size * size + 1));
-	solve(&a, &b, size, coms);
+	sort(&a, size, coms);
 //	print_stack(a, b);
 //	print_coms(coms);
+/*	if (is_sorted(a, size))
+		print_stack(a, b);
+	else 
+		ft_printf("no");*/
 /*	int c = 0;
 	int i = 0;
 	while (coms[i] != -1)
@@ -90,18 +98,17 @@ int		main(int argc, char **argv)
 			++c;
 		i++;
 	}
-	ft_printf("coms %d ", c);*/
-//	ft_printf("%d\n", g_count);
+	ft_printf("coms %d \n", c);
+	ft_printf("%d\n", g_count);*/
 	optimize_coms(coms);
-//	print_stack(a, b);
-	int i = 0;
-	int c = 0;
+/*	i = 0;
+	c = 0;
 	while (coms[i] != -1)
 	{
 		if (coms[i] != 0)
 			++c;
 		i++;
-	}
+	}*/
 	print_coms(coms);
 //	ft_printf("coms new %d\n", c);
 	free(coms);

@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 20:17:48 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/17 23:53:10 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/22 22:28:36 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	checker(t_stack **a)
 {
 	t_stack	*b;
 	char	*coms;
+	int count = 0;
 
 	b = NULL;
 	while (get_next_line(0, &coms))
@@ -60,9 +61,10 @@ void	checker(t_stack **a)
 			exit(-1);
 		}
 		free(coms);
-//	print_stack(*a, b);
+		++count;
 	}
-//	ft_printf("%d\n", count);
+//	print_stack(*a, b);
+//	ft_printf("moves %d\n", count);
 }
 
 int	main(int argc, char **argv)

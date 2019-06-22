@@ -6,7 +6,7 @@
 #    By: smorty <smorty@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/07 23:29:04 by smorty            #+#    #+#              #
-#    Updated: 2019/06/17 16:54:50 by smorty           ###   ########.fr        #
+#    Updated: 2019/06/22 22:37:07 by smorty           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LIB = $(SRCDIR)libft/
 
 LIBPRINTF = $(SRCDIR)ft_printf/
 
-SRCS1 = $(addprefix $(SRCDIR),push_swap.c utility.c array.c operators.c stacks.c solve_small.c solve_big.c quicksort.c optimization.c)
+SRCS1 = $(addprefix $(SRCDIR),push_swap.c utility.c array.c operators.c stacks.c solve_small.c sort_100.c quicksort.c optimization.c)
 
 SRCS2 = $(addprefix $(SRCDIR),checker.c utility.c operators.c stacks.c get_next_line/get_next_line.c)
 

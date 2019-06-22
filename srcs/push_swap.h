@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 14:40:26 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/17 23:43:53 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/22 22:51:21 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int				is_sorted(t_stack *s, int size);
 int				find_lowest(t_stack *a, int size);
 int				find_highest(t_stack *a, int size);
 int				stack_size(t_stack *a);
+void			sort_100(t_stack **a, t_stack **b, int size, int **coms);
 void			split_a(t_stack **a, t_stack **b, int size, int **coms);
 void			solve_3(t_stack **s, int **coms);
 void			solve_5_a(t_stack **a, t_stack **b, int size, int **coms);

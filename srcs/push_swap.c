@@ -12,8 +12,6 @@
 
 #include "push_swap.h"
 
-int g_count = 0;
-
 void	sort(t_stack **a, int size, int *coms)
 {
 	t_stack	*b;
@@ -29,11 +27,9 @@ void	sort(t_stack **a, int size, int *coms)
 	else if (size <= 100)
 		sort_100(a, &b, size, &p);
 	else
-		quicksort_ascending(a, &b, size, &p);
-//		split_a(a, b, size, &p);
-//	while (*b)
-//		push(b, a, &p);*/
+		sort_500(a, &b, size, &p);
 	*p = -1;
+	free(b);
 }
 
 void	print_coms(int *coms)
@@ -67,7 +63,6 @@ void	print_coms(int *coms)
 int		main(int argc, char **argv)
 {
 	t_stack *a;
-	t_stack *b;
 	int		size;
 	int		*arr;
 	int		*coms;
@@ -79,38 +74,13 @@ int		main(int argc, char **argv)
 	}
 	size = 1;
 	a = store_stack(argc - 1, argv + 1, &size);
-	b = NULL;
 	sort_array(arr, arr + size - 1);
 	mark_stack(a, arr, size);
 	coms = (int *)malloc(sizeof(int) * (size * size + 1));
 	sort(&a, size, coms);
-//	print_stack(a, b);
-//	print_coms(coms);
-/*	if (is_sorted(a, size))
-		print_stack(a, b);
-	else 
-		ft_printf("no");*/
-/*	int c = 0;
-	int i = 0;
-	while (coms[i] != -1)
-	{
-		if (coms[i] != 0)
-			++c;
-		i++;
-	}
-	ft_printf("coms %d \n", c);
-	ft_printf("%d\n", g_count);*/
 	optimize_coms(coms);
-/*	i = 0;
-	c = 0;
-	while (coms[i] != -1)
-	{
-		if (coms[i] != 0)
-			++c;
-		i++;
-	}*/
 	print_coms(coms);
-//	ft_printf("coms new %d\n", c);
+	free(a);
 	free(coms);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 16:43:58 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/17 23:43:45 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/23 19:54:13 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,19 +87,21 @@ int find_highest(t_stack *a, int size)
 	return (high);
 }
 
-int stack_size(t_stack *a)
+int stack_size(t_stack *s)
 {
-	int size;
-	
+	t_stack	*head;
+	int		size;
+
 	size = 0;
-	if (a)
+	if (s)
 	{
 		++size;
-		a = a->right;
-		while (!a->head)
+		head = s;
+		s = s->right;
+		while (s != head)
 		{
 			++size;
-			a = a->right;
+			s = s->right;
 		}
 	}
 	return (size);

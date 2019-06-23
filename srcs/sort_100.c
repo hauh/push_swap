@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 22:15:20 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/22 23:43:43 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/23 17:16:10 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,24 +86,45 @@ void	sort_100(t_stack **a, t_stack **b, int size, int **coms)
 {
 	int pivot;
 	int count;
+	int check_p = 0;
 
-	if (size == 3)
+	if (size == 2 && (*a)->place > (*a)->right->place)
+		swap(a, coms);
+	else if (size == 3)
 		solve_3(a, coms);
-	else
+	else if (size > 3)
 	{
 		pivot = find_lowest(*a, size) + size / 2 + size % 2;
 		count = 0;
-		while (count * 2 < size)
+		while (count * 2 < size || check_p != 2)
 		{
 			if ((*a)->place < pivot)
 			{
 				push(a, b, coms);
 				++count;
 			}
+			else if ((*a)->place == pivot)
+			{
+				push(a, b, coms);
+				rotate(b, coms);
+				++check_p;
+			}
+			else if ((*a)->place == pivot + 1)
+			{
+				push(a, b, coms);
+				rotate(b, coms);
+				++check_p;
+			}
 			else
 				rotate(a, coms);
 		}
-		sort_100(a, b, size - count, coms);
+		sort_100(a, b, size - count - 2, coms);
+		reverse(b, coms);
+		reverse(b, coms);
+		push(b, a, coms);
+		push(b, a, coms);
+		if ((*a)->place > (*a)->right->place)
+			swap(a, coms);
 		sort_back(a, b, count, coms);
 	}
 }

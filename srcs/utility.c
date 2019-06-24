@@ -6,18 +6,39 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 16:43:58 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/23 19:54:13 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/24 23:45:33 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	check_args(int argc, char **argv)
+static int	check_single_arg(char *arg)
+{
+	while (*arg)
+	{
+		if ((*arg < '0' || *arg > '9') && *arg != '-' && *arg != '+')
+			return (0);
+		++arg;
+		while (*arg || *arg != ' ')
+		{
+			if (*arg < '0' || *arg > '9')
+				return (0);
+			++arg;
+		}
+		if (*arg)
+			++arg;
+	}
+	return (1);
+}
+
+int			check_args(int argc, char **argv)
 {
 	char *s;
 
-	if (argc < 1)
+	if (!argc)
 		return (0);
+	if (argc == 1)
+		return (check_single_arg(*argv));
 	while (argc--)
 	{
 		s = *argv++;

@@ -67,19 +67,24 @@ int		main(int argc, char **argv)
 	int		*arr;
 	int		*coms;
 
-	if (!check_args(argc - 1, argv + 1) || !(arr = get_array(argc - 1, argv + 1)))
+	if (argc-- == 1)
+		return (0);
+	if (!check_args(argc, argv + 1) || !(arr = get_array(argc, argv + 1)))
 	{
 		ft_printf("Error\n");
 		return (-1);
 	}
 	size = 1;
-	a = store_stack(argc - 1, argv + 1, &size);
+	a = store_stack(argc, argv + 1, &size);
 	sort_array(arr, arr + size - 1);
 	mark_stack(a, arr, size);
 	coms = (int *)malloc(sizeof(int) * (size * size + 1));
-	sort(&a, size, coms);
-	optimize_coms(coms);
-	print_coms(coms);
+	if (!is_sorted(a, size))
+	{
+		sort(&a, size, coms);
+		optimize_coms(coms);
+		print_coms(coms);
+	}
 	free(a);
 	free(coms);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 17:00:23 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/14 19:48:58 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/24 23:59:29 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,52 @@ void	sort_array(int *begin, int *end)
 		sort_array(left, end);
 }
 
+static int *get_array_from_single_arg(char *arg)
+{
+	int *arr;
+	int i;
+	int j;
+
+	i = 0;
+	j = 1;
+	while (*(arg + i))
+	{
+		while (*(arg + i) == ' ')
+			++i;
+		++j;
+		++i;
+	}
+	if (!(arr = (int *)malloc(sizeof(int) * j)))
+		return (NULL);
+		i = 0;
+		j = 0;
+	while (*arg)
+	{
+		*(arr + i) = ft_atoi(&*arg);
+		while (*arg && *arg != ' ')
+			++arg;
+		++i;
+	}
+	i = j;
+//	while 
+	return (arr);
+}
+
 int		*get_array(int argc, char **argv)
 {
 	int *arr;
 	int i;
 
-	arr = (int *)malloc(sizeof(int) * argc);
+	if (argc == 1)
+		return (get_array_from_single_arg(*argv));
+	if (!(arr = (int *)malloc(sizeof(int) * argc)))
+		return (NULL);
 	i = 0;
 	while (i < argc)
+	{
 		*(arr + i++) = ft_atoi(*argv++);
-	while (argc)
+	}
+	while (argc--)
 	{
 		i = argc;
 		while (i--)
@@ -78,7 +114,6 @@ int		*get_array(int argc, char **argv)
 				return (NULL);
 			}
 		}
-		argc--;
 	}
 	return (arr);
 }

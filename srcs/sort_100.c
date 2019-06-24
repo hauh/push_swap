@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 22:15:20 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/23 17:16:10 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/24 20:10:42 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,41 +45,47 @@ static void	sort_back(t_stack **a, t_stack **b, int size, int **coms)
 		if (where_to(*b, start) < 0)
 			while ((*b)->place != start)
 			{
-				if ((*b)->place == end)
+				if ((*b)->place == start - 1)
+					push(b, a, coms);
+				else if ((*b)->place == end || (*b)->place == end + 1)
 				{
 					push(b, a, coms);
 					rotate(a, coms);
-					++end;
 				}
-				else if ((*b)->place == start - 1)
-					push(b, a, coms);
 				else
 					rotate(b, coms);
 			}
 		else
 			while ((*b)->place != start)
 			{
-				if ((*b)->place == end)
+				if ((*b)->place == start - 1)
+					push(b, a, coms);
+				else if ((*b)->place == end || (*b)->place == end + 1)
 				{
 					push(b, a, coms);
 					rotate(a, coms);
-					++end;
 				}
-				else if ((*b)->place == start - 1)
-					push(b, a, coms);
 				else
 					reverse(b, coms);
 			}
 		push(b, a, coms);
+		--start;
 		if ((*a)->place > (*a)->right->place)
 		{
 			swap(a, coms);
 			--start;
 		}
-		--start;
+		if ((*a)->left->place == start)
+			--start;
+		while ((*a)->left->place == end || (*a)->left->left->place == end)
+			++end;
 	}
-	while ((*a)->place > (*a)->left->place)
+	while ((*a)->left->place < (*a)->right->place)
+	{
 		reverse(a, coms);
+		if ((*a)->place > (*a)->right->place)
+			swap(a, coms);
+	}
 }
 
 void	sort_100(t_stack **a, t_stack **b, int size, int **coms)

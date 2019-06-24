@@ -6,20 +6,17 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 20:30:41 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/24 00:02:03 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/24 23:27:14 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int	print_numbers(t_stack *a, t_stack *b, char *com)
+static void	print_numbers(t_stack *a, t_stack *b)
 {
 	t_stack *ta;
 	t_stack *tb;
-	int lines;
 
-	lines = 2;
-	ft_printf("𝌃𝌃𝌃𝌃𝌃𝌃𝌃 Operation: %-3s 𝌃𝌃𝌃𝌃𝌃𝌃𝌃\n", com);
 	ta = a;
 	tb = b;
 	while (ta || tb)
@@ -27,88 +24,103 @@ static int	print_numbers(t_stack *a, t_stack *b, char *com)
 		if (ta)
 		{
 			ft_printf("|%10d   |", ta->n);
-			ta = ta->right;
-			if (ta == a)
-				ta = NULL;
+			ta = (ta->right == a ? NULL : ta->right);
 		}
 		else
 			ft_printf("|             |");
 		if (tb)
 		{
 			ft_printf("|%10d   |\n", tb->n);
-			tb = tb->right;
-			if (tb == b)
-				tb = NULL;
+			tb = (tb->right == b ? NULL : tb->right);
 		}
 		else
 			ft_printf("|             |\n");
-		++lines;
 	}
-	return (lines);
 }
 
-static int	print_graphic(t_stack *a, t_stack *b, char *com)
+static void	print_graphic(t_stack *a, t_stack *b, int size)
 {
 	t_stack	*ta;
 	t_stack	*tb;
-	wchar_t	*line;
-	int		size;
-	int		lines;
+	int		width;
 
-	ft_printf("𝌃𝌃𝌃𝌃𝌃𝌃𝌃 Operation: %-3s 𝌃𝌃𝌃𝌃𝌃𝌃𝌃\n", com);
 	ta = a;
 	tb = b;
-	lines = 2;
 	while (ta || tb)
 	{
 		if (ta)
 		{
-			size = 0;
-			line = (wchar_t *)malloc(sizeof(wchar_t) * (ta->n + 1));
-			line[ta->n] = 0;
-			while (size < ta->n)
-				line[size++] = L'■';
-			ft_printf("| {green}%S{eoc} %*|", line, 101 - ta->n);
-			ta = ta->right;
-			if (ta == a)
-				ta = NULL;
-			free(line);
+			ft_printf("| {green}");
+			width = 0;
+			while (width++ < ta->place)
+				ft_printf("■");
+			ft_printf("{eoc} %*|", size - ta->place);
+			ta = (ta->right == a ? NULL : ta->right);
 		}
 		else
-			ft_printf("|%*|", 103);
+			ft_printf("|%*|", size + 2);
 		if (tb)
 		{
-			size = 0;
-			line = (wchar_t *)malloc(sizeof(wchar_t) * (tb->n + 1));
-			line[tb->n] = 0;
-			while (size < tb->n)
-				line[size++] = L'■';
-			ft_printf("| {yellow}%S{eoc} %*|\n", line, 101 - tb->n);
-			free(line);
-			tb = tb->right;
-			if (tb == b)
-				tb = NULL;
+			ft_printf("| {yellow}");
+			width = 0;
+			while (width++ < tb->place)
+				ft_printf("■");
+			ft_printf("{eoc} %*|\n", size - tb->place);
+			tb = (tb->right == b ? NULL : tb->right);
 		}
 		else
-			ft_printf("|%*|\n", 102);
-		++lines;
+			ft_printf("|%*|\n", size + 2);
 	}
-	return (lines);
 }
 
-void print_stacks(t_stack *a, t_stack *b, char *com, int flag)
+static void	delay(int flag)
+{
+	char input;
+
+	if (flag % 10)
+		usleep(flag % 10 * 100000);
+	else
+	{
+		input = 0;
+		while (input != '\n')
+		{
+			ft_printf("\e[JPress enter to continue");
+			read(1, &input, 1);
+		}
+		ft_printf("\e[F\e[J");
+	}
+	ft_printf("\e[s\e[H");
+}
+
+void		print_stacks(t_stack *a, t_stack *b, char *com, int flag)
 {
 	static int	count = 0;
-	int			lines;
+	static int	size = 0;
+	int			s;
 
-	lines = 0;
-	if (flag == 1)
-		lines = print_numbers(a, b, com);
-	else if (flag == 2)
-		lines = print_graphic(a, b, com);
-	usleep(100000);
-	ft_printf("𝌃𝌃𝌃𝌃𝌃𝌃𝌃 Moves: %-5d 𝌃𝌃𝌃𝌃𝌃𝌃𝌃\e[J\n\e[s", count);
-	count++;
-	while (lines--)
-		ft_printf("\e[F");
+	if (!size)
+	{
+		ft_printf("\e[?25l\e[H\e[J");
+		size = (flag / 10 == 1 ? 12 : stack_size(a) + 1);
+		if (size < 7)
+			size = 7;
+	}
+	s = size - 5;
+	while (s--)
+		ft_printf("𝌃");
+	ft_printf(" Operation: %3s ", com);
+	s = size - 5;
+	while (s--)
+		ft_printf("𝌃");
+	ft_printf("\n");
+	flag / 10 == 1 ? print_numbers(a, b) : print_graphic(a, b, size);
+	s = size - 4;
+	while (s--)
+		ft_printf("𝌃");
+	ft_printf(" Moves: %5d ", count++);
+	s = size - 4;
+	while (s--)
+		ft_printf("𝌃");
+	ft_printf("\n\e[J");
+	delay(flag);
 }

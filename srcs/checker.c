@@ -6,19 +6,20 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 20:17:48 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/23 23:54:21 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/24 22:23:08 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	checker(t_stack **a)
+void	checker(t_stack **a, int flag)
 {
 	t_stack	*b;
 	char	*com;
 
 	b = NULL;
-	print_stacks(*a, b, "   ", 2);
+	if (flag)
+		print_stacks(*a, b, "   ", flag);
 	while (get_next_line(0, &com))
 	{
 		if (ft_strequ(com, "sa"))
@@ -54,25 +55,60 @@ void	checker(t_stack **a)
 			push(a, &b, NULL);
 		else
 		{
-			write(1, "Error\n", 6);
+			ft_printf("Error\n");
 			exit(-1);
 		}
-		print_stacks(*a, b, com, 2);
+		if (flag)
+			print_stacks(*a, b, com, flag);
 		free(com);
 	}
+}
+
+int	get_flag(char **argv)
+{
+	int flag;
+
+	if (**argv != '-' || (*(*argv + 1) > '0' && *(*argv + 1) < '9'))
+		return (0);
+	if (*(*argv + 1) == 'n')
+		flag = 10 + (*(*argv + 2) ? *(*argv + 2) - '0' : 0);
+	else if (*(*argv + 1) == 'v')
+		flag = 20 + (*(*argv + 2) ? *(*argv + 2) - '0' : 0);
+	else
+	{
+//		usage();
+		exit(0);
+	}
+	return (flag);
 }
 
 int	main(int argc, char **argv)
 {
 	t_stack *a;
+	int		*arr;
 	int		size;
+	int		flag;
 
-	if (argc < 2)
+	if (argc-- == 1)
+		return (0);
+	if ((flag = get_flag(++argv)) > 0)
+	{
+		++argv;
+		--argc;
+	}
+	ft_printf("%d\n", flag);
+	if (!check_args(argc, argv) || !(arr = get_array(argc, argv)))
+	{
+		ft_printf("Error\n");
 		return (-1);
+	}
 	size = 1;
-	a = store_stack(argc - 1, argv + 1, &size);
-	checker(&a);
-	ft_printf("\e[u");
+	a = store_stack(argc, argv, &size);
+	sort_array(arr, arr + size - 1);
+	mark_stack(a, arr, size);
+	checker(&a, flag);
+	if (flag)
+		ft_printf("\e[u\e[?25h");
 	ft_printf(is_sorted(a, size) ? "OK\n" : "KO\n");
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 23:39:55 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/15 22:34:58 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/25 18:36:49 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	optimize_swap(int *coms)
 	s = coms;
 	if (*coms == SA)
 	{
-		while ((*s == SA || *s == RA || *s == RRA || *s == SS || !*s) && *s != -1)
+		while (*s != -1 && (*s == SA || *s == RA || *s == RRA || !*s))
 			++s;
 		if (*s == SB)
 		{
@@ -29,7 +29,7 @@ static void	optimize_swap(int *coms)
 	}
 	else if (*s == SB)
 	{
-		while ((*s == SB || *s == RB || *s == RRB || *s == SS || !*s) && *s != -1)
+		while (*s != -1 && (*s == SB || *s == RB || *s == RRB || !*s))
 			++s;
 		if (*s == SA)
 		{
@@ -46,7 +46,7 @@ static void	optimize_rotate(int *coms)
 	s = coms;
 	if (*coms == RA)
 	{
-		while ((*s == SA || *s == RA || *s == RRA || *s == RR || !*s) && *s != -1)
+		while (*s != -1 && (*s == SA || *s == RA || *s == RRA || !*s))
 			++s;
 		if (*s == RB)
 		{
@@ -56,7 +56,7 @@ static void	optimize_rotate(int *coms)
 	}
 	else if (*s == RB)
 	{
-		while ((*s == SB || *s == RB || *s == RRB || *s == RR || !*s) && *s != -1)
+		while (*s != -1 && (*s == SB || *s == RB || *s == RRB || !*s))
 			++s;
 		if (*s == RA)
 		{
@@ -73,7 +73,7 @@ static void	optimize_reverse(int *coms)
 	s = coms;
 	if (*coms == RRA)
 	{
-		while ((*s == SA || *s == RA || *s == RRA || *s == RRR || !*s) && *s != -1)
+		while (*s != -1 && (*s == SA || *s == RA || *s == RRA || !*s))
 			++s;
 		if (*s == RRB)
 		{
@@ -83,7 +83,7 @@ static void	optimize_reverse(int *coms)
 	}
 	else if (*s == RRB)
 	{
-		while ((*s == SB || *s == RB || *s == RRB || *s == RRR || !*s) && *s != -1)
+		while (*s != -1 && (*s == SB || *s == RB || *s == RRB || !*s))
 			++s;
 		if (*s == RRA)
 		{

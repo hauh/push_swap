@@ -6,36 +6,24 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 22:20:39 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/17 19:09:24 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/25 19:45:58 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	solve_3(t_stack **s, int **coms)
+void	sort_3(t_stack **s, int **coms)
 {
-	if ((*s)->ab == 'a')
-		while ((*s)->place > (*s)->right->place ||
-			(*s)->right->place > (*s)->left->place)
-		{
-			if ((*s)->place > (*s)->left->place)
-				rotate(s, coms);
-			else if ((*s)->place > (*s)->right->place)
-				swap(s, coms);
-			else if ((*s)->right->place > (*s)->left->place)
-				reverse(s, coms);
-		}
-	else
-		while ((*s)->place < (*s)->right->place ||
-			(*s)->right->place < (*s)->left->place)
-		{
-			if ((*s)->place < (*s)->left->place)
-				rotate(s, coms);
-			else if ((*s)->place < (*s)->right->place)
-				swap(s, coms);
-			else if ((*s)->right->place < (*s)->left->place)
-				reverse(s, coms);
-		}
+	while ((*s)->place > (*s)->right->place ||
+		(*s)->right->place > (*s)->left->place)
+	{
+		if ((*s)->place > (*s)->left->place)
+			rotate(s, coms);
+		else if ((*s)->place > (*s)->right->place)
+			swap(s, coms);
+		else if ((*s)->right->place > (*s)->left->place)
+			reverse(s, coms);
+	}
 }
 
 int		is_sorted_back(t_stack *s, int size)
@@ -54,7 +42,7 @@ int		is_sorted_back(t_stack *s, int size)
 		return (0);
 	return (1);
 }
-
+/*
 void	solve_5_b(t_stack **a, t_stack **b, int size, int **coms)
 {
 	int i;
@@ -116,3 +104,4 @@ void	solve_5_a(t_stack **a, t_stack **b, int size, int **coms)
 		push(b, a, coms);
 	}
 }
+*/

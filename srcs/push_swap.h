@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 14:40:26 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/23 22:39:34 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/25 23:11:49 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ typedef struct	s_stack
 }				t_stack;
 
 int				check_args(int argc, char **argv);
+int				*get_array(int argc, char **argv, int *size);
 t_stack			*new_stack(int n);
-t_stack			*store_stack(int argc, char **argv, int *size);
-int				*get_array(int argc, char **argv);
+t_stack			*store_stack(int *arr, int size);
 void			sort_array(int *begin, int *end);
 void			mark_stack(t_stack *a, int *arr, int size);
 void			print_stacks(t_stack *a, t_stack *b, char *com, int flag);
@@ -54,9 +54,9 @@ int				is_sorted(t_stack *s, int size);
 int				find_lowest(t_stack *a, int size);
 int				find_highest(t_stack *a, int size);
 int				stack_size(t_stack *a);
+void			sort_3(t_stack **s, int **coms);
 void			sort_100(t_stack **a, t_stack **b, int size, int **coms);
 void			sort_500(t_stack **a, t_stack **b, int high, int **coms);
-void			solve_3(t_stack **s, int **coms);
 void			solve_5_a(t_stack **a, t_stack **b, int size, int **coms);
 void			solve_5_b(t_stack **a, t_stack **b, int size, int **coms);
 void			optimize_coms(int *coms);

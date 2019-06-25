@@ -21,9 +21,9 @@ void	sort(t_stack **a, int size, int *coms)
 	*p++ = 0;
 	b = NULL;
 	if (size <= 3)
-		solve_3(a, &p);
-	else if (size <= 5)
-		solve_5_a(a, &b, size, &p);
+		sort_3(a, &p);
+//	else if (size <= 5)
+//		solve_5_a(a, &b, size, &p);
 	else if (size <= 100)
 		sort_100(a, &b, size, &p);
 	else
@@ -69,13 +69,13 @@ int		main(int argc, char **argv)
 
 	if (argc-- == 1)
 		return (0);
-	if (!check_args(argc, argv + 1) || !(arr = get_array(argc, argv + 1)))
+	++argv;
+	if (!check_args(argc, argv) || !(arr = get_array(argc, argv, &size)))
 	{
 		ft_printf("Error\n");
 		return (-1);
 	}
-	size = 1;
-	a = store_stack(argc, argv + 1, &size);
+	a = store_stack(arr, size);
 	sort_array(arr, arr + size - 1);
 	mark_stack(a, arr, size);
 	coms = (int *)malloc(sizeof(int) * (size * size + 1));

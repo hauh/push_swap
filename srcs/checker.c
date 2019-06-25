@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 20:17:48 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/24 22:23:08 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/25 17:33:39 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,19 +96,15 @@ int	main(int argc, char **argv)
 		++argv;
 		--argc;
 	}
-	ft_printf("%d\n", flag);
-	if (!check_args(argc, argv) || !(arr = get_array(argc, argv)))
+	if (!check_args(argc, argv) || !(arr = get_array(argc, argv, &size)))
 	{
 		ft_printf("Error\n");
 		return (-1);
 	}
-	size = 1;
-	a = store_stack(argc, argv, &size);
+	a = store_stack(arr, size);
 	sort_array(arr, arr + size - 1);
 	mark_stack(a, arr, size);
 	checker(&a, flag);
-	if (flag)
-		ft_printf("\e[u\e[?25h");
 	ft_printf(is_sorted(a, size) ? "OK\n" : "KO\n");
 	return (0);
 }

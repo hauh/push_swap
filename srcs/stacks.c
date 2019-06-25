@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 15:18:43 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/23 20:26:46 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/25 18:24:21 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,61 @@ t_stack	*new_stack(int n)
 	return (st);
 }
 
-t_stack	*store_stack(int argc, char **argv, int *size)
+t_stack	*store_stack(int *arr, int size)
 {
 	t_stack *a;
 	t_stack *head;
 
-	head = new_stack(ft_atoi(*argv++));
+	head = new_stack(*arr++);
 	head->ab = 'a';
 	a = head;
-	while (--argc)
+	while (--size)
 	{
-		a->right = new_stack(ft_atoi(*argv++));
+		a->right = new_stack(*arr++);
 		a->right->left = a;
 		a->right->ab = 'a';
 		a = a->right;
-		++(*size);
 	}
 	a->right = head;
 	head->left = a;
 	return (head);
+}
+
+int		stack_size(t_stack *s)
+{
+	t_stack	*head;
+	int		size;
+
+	size = 0;
+	if (s)
+	{
+		++size;
+		head = s;
+		s = s->right;
+		while (s != head)
+		{
+			++size;
+			s = s->right;
+		}
+	}
+	return (size);
+}
+
+int		is_sorted(t_stack *s, int size)
+{
+	t_stack *r;
+
+	r = s;
+	r = r->right;
+	--size;
+	while (r != s && r->n > r->left->n)
+	{
+		r = r->right;
+		--size;
+	}
+	if (size != 0)
+		return (0);
+	return (1);
 }
 
 void	free_stack(t_stack *s)

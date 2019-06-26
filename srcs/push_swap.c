@@ -67,10 +67,10 @@ int		main(int argc, char **argv)
 	int		*arr;
 	int		*coms;
 
-	if (argc-- == 1)
+	if (--argc < 2)
 		return (0);
 	++argv;
-	if (!check_args(argc, argv) || !(arr = get_array(argc, argv, &size)))
+	if (!(arr = get_array(argc, argv, &size)))
 	{
 		ft_printf("Error\n");
 		return (-1);
@@ -86,6 +86,7 @@ int		main(int argc, char **argv)
 		print_coms(coms);
 	}
 	free(a);
+	free(arr);
 	free(coms);
 	return (0);
 }

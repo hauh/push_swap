@@ -6,33 +6,63 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 17:00:23 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/25 18:15:45 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/27 00:21:23 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int		*get_array_single_arg(char **arg, int *size)
+static int	get_number(char *s)
+{
+	int num;
+	int len;
+
+	while ((*s >= 9 && *s <= 13) || *s == 32)
+		++s;
+	num = ft_atoi(s);
+	if (*s == '-' || *s == '+')
+		++s;
+	if (*s < '0' || *s > '9')
+	{
+		ft_printf("Error\n");
+		exit(-1);
+	}
+	while (*s == '0')
+		++s;
+	len = 0;
+	while (*(s + len) >= '0' && *(s + len) <= '9')
+		++len;
+	if (*(s + len) || len > 10 ||
+		(len == 10 && (*s > '2' || (*s == '2' && num <= 0))))
+	{
+		ft_printf("Error\n");
+		exit(-1);
+	}
+	return (num);
+}
+
+static int	*get_array_single_arg(char **arg, int *size)
 {
 	int *arr;
 	int i;
 
-	i = 0;
 	if (!(arg = ft_strsplit(*arg, ' ')))
 		return (NULL);
+	i = 0;
 	while (arg[i])
 		++i;
 	if (i > 1)
 		arr = get_array(i, arg, size);
 	else if ((arr = (int *)malloc(sizeof(int))))
-		*arr = ft_atoi(*arg);
+		*arr = get_number(*arg);
+	*size = i;
 	while (i)
 		free(arg[i--]);
 	free(arg);
 	return (arr);
 }
 
-int		*get_array(int argc, char **argv, int *size)
+int			*get_array(int argc, char **argv, int *size)
 {
 	int *arr;
 	int i;
@@ -44,7 +74,7 @@ int		*get_array(int argc, char **argv, int *size)
 	if (!(arr = (int *)malloc(sizeof(int) * argc)))
 		return (NULL);
 	while (i < argc)
-		*(arr + i++) = ft_atoi(*argv++);
+		*(arr + i++) = get_number(*argv++);
 	while (argc--)
 	{
 		i = argc;
@@ -60,7 +90,7 @@ int		*get_array(int argc, char **argv, int *size)
 	return (arr);
 }
 
-void	sort_array(int *begin, int *end)
+void		sort_array(int *begin, int *end)
 {
 	int	*left;
 	int	*right;
@@ -89,13 +119,11 @@ void	sort_array(int *begin, int *end)
 		sort_array(left, end);
 }
 
-void	mark_stack(t_stack *a, int *arr, int size)
+void		mark_stack(t_stack *a, int *arr, int size)
 {
 	int i;
-	int *arr0;
 
 	i = 1;
-	arr0 = arr;
 	while (size--)
 	{
 		while (a->n != *arr)
@@ -103,5 +131,4 @@ void	mark_stack(t_stack *a, int *arr, int size)
 		a->place = i++;
 		++arr;
 	}
-	free(arr0);
 }

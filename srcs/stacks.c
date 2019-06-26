@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 15:18:43 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/25 18:24:21 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/26 23:24:42 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int		is_sorted(t_stack *s, int size)
 	r = s;
 	r = r->right;
 	--size;
-	while (r != s && r->n > r->left->n)
+	while (r != s && r->place > r->left->place)
 	{
 		r = r->right;
 		--size;
@@ -83,10 +83,12 @@ int		is_sorted(t_stack *s, int size)
 
 void	free_stack(t_stack *s)
 {
-	while (s)
+	while (s->right)
 	{
 		s = s->right;
 		free(s->left);
 		s->left = NULL;
 	}
+	free(s);
+	s = NULL;
 }

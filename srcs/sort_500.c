@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/17 16:37:39 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/25 18:10:46 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/26 23:27:01 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,6 @@ static int	split(t_stack **a, t_stack **b, int size, int **coms)
 	pushed = 0;
 	rotated = 0;
 	while (size--)
-	{
 		if (((*a)->ab == 'a' && (*a)->place <= pivot) ||
 			((*a)->ab == 'b' && (*a)->place >= pivot))
 		{
@@ -155,7 +154,6 @@ static int	split(t_stack **a, t_stack **b, int size, int **coms)
 			rotate(a, coms);
 			++rotated;
 		}
-	}
 	if (stack_size(*a) > rotated)
 		while (rotated--)
 			reverse(a, coms);

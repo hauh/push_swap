@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 20:17:48 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/25 17:33:39 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/27 00:11:00 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	main(int argc, char **argv)
 		++argv;
 		--argc;
 	}
-	if (!check_args(argc, argv) || !(arr = get_array(argc, argv, &size)))
+	if (!(arr = get_array(argc, argv, &size)))
 	{
 		ft_printf("Error\n");
 		return (-1);
@@ -105,6 +105,8 @@ int	main(int argc, char **argv)
 	sort_array(arr, arr + size - 1);
 	mark_stack(a, arr, size);
 	checker(&a, flag);
-	ft_printf(is_sorted(a, size) ? "OK\n" : "KO\n");
+	ft_printf(a && is_sorted(a, size) ? "OK\n" : "KO\n");
+	free(arr);
+	free(a);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 17:00:23 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/27 00:21:23 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/27 22:24:38 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,31 @@
 
 static int	get_number(char *s)
 {
-	int num;
-	int len;
+	long long	num;
+	int			len;
+	int			sign;
 
 	while ((*s >= 9 && *s <= 13) || *s == 32)
 		++s;
-	num = ft_atoi(s);
+	num = 0;
+	sign = (*s == '-' ? -1 : 1);
 	if (*s == '-' || *s == '+')
 		++s;
 	if (*s < '0' || *s > '9')
-	{
-		ft_printf("Error\n");
-		exit(-1);
-	}
+		error();
 	while (*s == '0')
 		++s;
 	len = 0;
-	while (*(s + len) >= '0' && *(s + len) <= '9')
-		++len;
-	if (*(s + len) || len > 10 ||
-		(len == 10 && (*s > '2' || (*s == '2' && num <= 0))))
+	while (*s >= '0' && *s <= '9' && len <= 10)
 	{
-		ft_printf("Error\n");
-		exit(-1);
+		num = num * 10 + (*s - '0');
+		++len;
+		++s;
 	}
-	return (num);
+	num *= sign;
+	if (*s || num != (int)num)
+		error();
+	return ((int)num);
 }
 
 static int	*get_array_single_arg(char **arg, int *size)
@@ -46,7 +46,7 @@ static int	*get_array_single_arg(char **arg, int *size)
 	int *arr;
 	int i;
 
-	if (!(arg = ft_strsplit(*arg, ' ')))
+	if (!(arg = ft_strsplit(*arg, ' ')) || !*arg)
 		return (NULL);
 	i = 0;
 	while (arg[i])
@@ -117,18 +117,4 @@ void		sort_array(int *begin, int *end)
 		sort_array(begin, right);
 	if (end > left && left != begin)
 		sort_array(left, end);
-}
-
-void		mark_stack(t_stack *a, int *arr, int size)
-{
-	int i;
-
-	i = 1;
-	while (size--)
-	{
-		while (a->n != *arr)
-			a = a->right;
-		a->place = i++;
-		++arr;
-	}
 }

@@ -6,56 +6,50 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 16:43:58 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/25 19:19:29 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/27 18:57:34 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int	check_single_arg(char *arg)
+int		stack_size(t_stack *s)
 {
-	while (*arg)
+	t_stack	*head;
+	int		size;
+
+	size = 0;
+	if (s)
 	{
-		if ((*arg < '0' || *arg > '9') && *arg != '-' && *arg != '+')
-			return (0);
-		++arg;
-		while (*arg && *arg != ' ')
+		++size;
+		head = s;
+		s = s->right;
+		while (s != head)
 		{
-			if (*arg < '0' || *arg > '9')
-				return (0);
-			++arg;
+			++size;
+			s = s->right;
 		}
-		if (*arg)
-			++arg;
 	}
-	return (1);
+	return (size);
 }
 
-int			check_args(int argc, char **argv)
+int		is_sorted(t_stack *s, int size)
 {
-	char *s;
+	t_stack *r;
 
-	if (!argc)
+	r = s;
+	r = r->right;
+	--size;
+	while (r != s && r->place > r->left->place)
+	{
+		r = r->right;
+		--size;
+	}
+	if (size != 0)
 		return (0);
-	if (argc == 1)
-		return (check_single_arg(*argv));
-	while (argc--)
-	{
-		s = *argv++;
-		if ((*s < '0' || *s > '9') && *s != '-' && *s != '+')
-			return (0);
-		++s;
-		while (*s)
-		{
-			if (*s < '0' || *s > '9')
-				return (0);
-			++s;
-		}
-	}
 	return (1);
 }
 
-int			find_lowest(t_stack *s, int size)
+int		find_lowest(t_stack *s, int size)
 {
 	int low;
 
@@ -73,7 +67,7 @@ int			find_lowest(t_stack *s, int size)
 	return (low);
 }
 
-int			find_highest(t_stack *s, int size)
+int		find_highest(t_stack *s, int size)
 {
 	int high;
 
@@ -89,4 +83,10 @@ int			find_highest(t_stack *s, int size)
 		}
 	}
 	return (high);
+}
+
+void	error(void)
+{
+	ft_printf("Error\n");
+	exit(-1);
 }

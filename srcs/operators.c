@@ -6,24 +6,30 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 14:35:30 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/23 19:56:25 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/28 00:19:00 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	swap(t_stack **s, int **coms)
+static void	write_command(int operation, int **ops)
+{
+	int check;
+
+	check = operation + *(*ops - 1);
+	if (check == PA + PB || check == SA + SA || check == SB + SB
+		|| check == RA + RRA || check == RB + RRB)
+		*(--*ops) = 0;
+	else
+		*((*ops)++) = operation;
+}
+
+void		swap(t_stack **s, int **ops)
 {
 	if (*s && *s != (*s)->right)
 	{
-		if (coms)
-		{
-			if (((*s)->ab == 'a' && *(*coms - 1) == SA) ||
-				((*s)->ab == 'b' && *(*coms - 1) == SB))
-				*(--*coms) = 0;
-			else
-				*((*coms)++) = ((*s)->ab == 'a' ? SA : SB);
-		}
+		if (ops)
+			write_command((*s)->ab == 'a' ? SA : SB, ops);
 		if ((*s)->right->right != *s)
 		{
 			(*s)->right->right->left = *s;
@@ -37,20 +43,14 @@ void	swap(t_stack **s, int **coms)
 	}
 }
 
-void	push(t_stack **a, t_stack **b, int **coms)
+void		push(t_stack **a, t_stack **b, int **ops)
 {
 	t_stack *tmp;
 
 	if (*a)
 	{
-		if (coms)
-		{
-			if (((*a)->ab == 'a' && *(*coms - 1) == PA) ||
-				((*a)->ab == 'b' && *(*coms - 1) == PB))
-				*(--*coms) = 0;
-			else
-				*((*coms)++) = ((*a)->ab == 'a' ? PB : PA);
-		}
+		if (ops)
+			write_command((*a)->ab == 'a' ? PB : PA, ops);
 		(*a)->ab = ((*a)->ab == 'a' ? 'b' : 'a');
 		tmp = (*a == (*a)->right ? NULL : (*a)->right);
 		(*a)->right->left = (*a)->left;
@@ -72,34 +72,22 @@ void	push(t_stack **a, t_stack **b, int **coms)
 	}
 }
 
-void	rotate(t_stack **s, int **coms)
+void		rotate(t_stack **s, int **ops)
 {
 	if (*s && (*s)->right != *s)
 	{
-		if (coms)
-		{
-			if (((*s)->ab == 'a' && *(*coms - 1) == RRA) ||
-				((*s)->ab == 'b' && *(*coms - 1) == RRB))
-				*(--*coms) = 0;
-			else
-				*((*coms)++) = ((*s)->ab == 'a' ? RA : RB);
-		}
+		if (ops)
+			write_command((*s)->ab == 'a' ? RA : RB, ops);
 		*s = (*s)->right;
 	}
 }
 
-void	reverse(t_stack **s, int **coms)
+void		reverse(t_stack **s, int **ops)
 {
 	if (*s && (*s)->left != *s)
 	{
-		if (coms)
-		{
-			if (((*s)->ab == 'a' && *(*coms - 1) == RA) ||
-				((*s)->ab == 'b' && *(*coms - 1) == RB))
-				*(--*coms) = 0;
-			else
-				*((*coms)++) = ((*s)->ab == 'a' ? RRA : RRB);
-		}
+		if (ops)
+			write_command((*s)->ab == 'a' ? RRA : RRB, ops);
 		*s = (*s)->left;
 	}
 }

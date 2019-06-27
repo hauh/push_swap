@@ -5,25 +5,25 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/07 20:40:49 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/13 17:12:30 by smorty           ###   ########.fr       */
+/*   Created: 2019/06/27 18:59:30 by smorty            #+#    #+#             */
+/*   Updated: 2019/06/28 00:22:01 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sort(t_stack **a, int size, int *coms)
+void	sort(t_stack **a, int size, int *ops)
 {
 	t_stack	*b;
 	int		*p;
 
-	p = coms;
+	p = ops;
 	*p++ = 0;
 	b = NULL;
 	if (size <= 3)
 		sort_3(a, &p);
-//	else if (size <= 5)
-//		solve_5_a(a, &b, size, &p);
+	else if (size <= 5)
+		sort_5(a, &b, size, &p);
 	else if (size <= 100)
 		sort_100(a, &b, size, &p);
 	else
@@ -32,31 +32,33 @@ void	sort(t_stack **a, int size, int *coms)
 	free(b);
 }
 
-void	print_coms(int *coms)
+void	print_ops(int *ops)
 {
-	while (*coms != -1)
+	while (*ops != -1)
 	{
-		if (*coms == SA)
+		if (*ops == SA)
 			ft_printf("sa\n");
-		else if (*coms == PA)
+		else if (*ops == PA)
 			ft_printf("pa\n");
-		else if (*coms == RA)
+		else if (*ops == RA)
 			ft_printf("ra\n");
-		else if (*coms == RRA)
+		else if (*ops == RRA)
 			ft_printf("rra\n");
-		else if (*coms == SB)
+		else if (*ops == SB)
 			ft_printf("sb\n");
-		else if (*coms == PB)
+		else if (*ops == PB)
 			ft_printf("pb\n");
-		else if (*coms == RB)
+		else if (*ops == RB)
 			ft_printf("rb\n");
-		else if (*coms == RRB)
+		else if (*ops == RRB)
 			ft_printf("rrb\n");
-		else if (*coms == RR)
+		else if (*ops == SS)
+			ft_printf("ss\n");
+		else if (*ops == RR)
 			ft_printf("rr\n");
-		else if (*coms == RRR)
+		else if (*ops == RRR)
 			ft_printf("rrr\n");
-		++coms;
+		++ops;
 	}
 }
 
@@ -65,28 +67,25 @@ int		main(int argc, char **argv)
 	t_stack *a;
 	int		size;
 	int		*arr;
-	int		*coms;
+	int		*ops;
 
-	if (--argc < 2)
+	if (argc-- < 2)
 		return (0);
 	++argv;
 	if (!(arr = get_array(argc, argv, &size)))
-	{
-		ft_printf("Error\n");
-		return (-1);
-	}
+		error();
 	a = store_stack(arr, size);
 	sort_array(arr, arr + size - 1);
 	mark_stack(a, arr, size);
-	coms = (int *)malloc(sizeof(int) * (size * size + 1));
+	ops = (int *)malloc(sizeof(int) * (size * size + 1));
 	if (!is_sorted(a, size))
 	{
-		sort(&a, size, coms);
-		optimize_coms(coms);
-		print_coms(coms);
+		sort(&a, size, ops);
+		optimize_ops(ops);
+		print_ops(ops);
 	}
 	free(a);
 	free(arr);
-	free(coms);
+	free(ops);
 	return (0);
 }

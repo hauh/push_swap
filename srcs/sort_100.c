@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 22:15:20 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/26 19:12:25 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/27 20:28:46 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,17 @@ static int	where_to(t_stack *s, int place)
 	return (direction);
 }
 
-static void	bottom_up(t_stack **a, int **coms)
+static void	bottom_up(t_stack **a, int **ops)
 {
 	while ((*a)->left->place < (*a)->right->place)
 	{
-		reverse(a, coms);
+		reverse(a, ops);
 		if ((*a)->place > (*a)->right->place)
-			swap(a, coms);
+			swap(a, ops);
 	}
 }
 
-static void	sort_back(t_stack **a, t_stack **b, int size, int **coms)
+static void	sort_back(t_stack **a, t_stack **b, int size, int **ops)
 {
 	int start;
 	int end;
@@ -57,21 +57,21 @@ static void	sort_back(t_stack **a, t_stack **b, int size, int **coms)
 			{
 				if ((*b)->place == end)
 					end += 1 + ((*a)->left->place == end + 1);
-				push(b, a, coms);
-				rotate(a, coms);
+				push(b, a, ops);
+				rotate(a, ops);
 			}
 			else
-				where_to(*b, start) >= 0 ? rotate(b, coms) : reverse(b, coms);
-		push(b, a, coms);
+				where_to(*b, start) >= 0 ? rotate(b, ops) : reverse(b, ops);
+		push(b, a, ops);
 		while ((*a)->place == start || (*a)->left->place == start
 			|| (*a)->right->place == start)
 			--start;
 		if ((*a)->place > (*a)->right->place)
-			swap(a, coms);
+			swap(a, ops);
 	}
 }
 
-static int	split(t_stack **a, t_stack **b, int size, int **coms)
+static int	split(t_stack **a, t_stack **b, int size, int **ops)
 {
 	int pivot;
 	int count;
@@ -81,33 +81,33 @@ static int	split(t_stack **a, t_stack **b, int size, int **coms)
 	while (count * 2 < size + 4)
 		if ((*a)->place <= pivot + 1)
 		{
-			push(a, b, coms);
+			push(a, b, ops);
 			++count;
 			if ((*b)->place >= pivot)
-				rotate(b, coms);
+				rotate(b, ops);
 		}
 		else
-			rotate(a, coms);
+			rotate(a, ops);
 	return (count);
 }
 
-void		sort_100(t_stack **a, t_stack **b, int size, int **coms)
+void		sort_100(t_stack **a, t_stack **b, int size, int **ops)
 {
 	int count;
 
 	if (size < 4)
-		sort_3(a, coms);
+		sort_3(a, ops);
 	else
 	{
-		count = split(a, b, size, coms);
-		sort_100(a, b, size - count, coms);
-		reverse(b, coms);
-		reverse(b, coms);
-		push(b, a, coms);
-		push(b, a, coms);
+		count = split(a, b, size, ops);
+		sort_100(a, b, size - count, ops);
+		reverse(b, ops);
+		reverse(b, ops);
+		push(b, a, ops);
+		push(b, a, ops);
 		if ((*a)->place > (*a)->right->place)
-			swap(a, coms);
-		sort_back(a, b, count - 2, coms);
-		bottom_up(a, coms);
+			swap(a, ops);
+		sort_back(a, b, count - 2, ops);
+		bottom_up(a, ops);
 	}
 }

@@ -6,13 +6,13 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/17 16:37:39 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/26 23:27:01 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/27 20:28:46 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "push_swap.h"
 
-void		sort_3_ascending(t_stack **a, int **coms)
+void		sort_3_ascending(t_stack **a, int **ops)
 {
     int one;
     int two;
@@ -23,55 +23,55 @@ void		sort_3_ascending(t_stack **a, int **coms)
     three = (*a)->right->right->place;
     if (one > two && one > three && two < three)
         if (stack_size(*a) == 3)
-            swap(a, coms);
+            swap(a, ops);
         else
         {
-            swap(a, coms);
-            rotate(a, coms);
-            swap(a, coms);
-            reverse(a, coms);
+            swap(a, ops);
+            rotate(a, ops);
+            swap(a, ops);
+            reverse(a, ops);
         }
     else if (one > two && one > three && two > three)
         if (stack_size(*a) == 3)
         {
-            rotate(a, coms);
-            swap(a, coms);
+            rotate(a, ops);
+            swap(a, ops);
         }
         else
         {
-            swap(a, coms);
-            rotate(a, coms);
-            swap(a, coms);
-            reverse(a, coms);
-            swap(a, coms);
+            swap(a, ops);
+            rotate(a, ops);
+            swap(a, ops);
+            reverse(a, ops);
+            swap(a, ops);
         }
     else if (two > one && two > three && one < three)
         if (stack_size(*a) == 3)
         {
-            reverse(a, coms);
-            swap(a, coms);
+            reverse(a, ops);
+            swap(a, ops);
         }
         else
         {
-            rotate(a, coms);
-            swap(a, coms);
-            reverse(a, coms);
+            rotate(a, ops);
+            swap(a, ops);
+            reverse(a, ops);
         }
     else if (two > one && two > three && one > three)
         if (stack_size(*a) == 3)
-            reverse(a, coms);
+            reverse(a, ops);
         else
         {
-            rotate(a, coms);
-            swap(a, coms);
-            reverse(a, coms);
-            swap(a, coms);
+            rotate(a, ops);
+            swap(a, ops);
+            reverse(a, ops);
+            swap(a, ops);
         }
     else if (three > one && three > two && one > two)
-        swap(a, coms);
+        swap(a, ops);
 }
 
-void            sort_3_descending(t_stack **a, int **coms)
+void            sort_3_descending(t_stack **a, int **ops)
 {
     int one;
     int two;
@@ -83,56 +83,56 @@ void            sort_3_descending(t_stack **a, int **coms)
     if (one > two && one > three && two < three)
         if (stack_size(*a) == 3)
         {
-            reverse(a, coms);
-            swap(a, coms);
+            reverse(a, ops);
+            swap(a, ops);
         }
         else
         {
-            rotate(a, coms);
-            swap(a, coms);
-            reverse(a, coms);
+            rotate(a, ops);
+            swap(a, ops);
+            reverse(a, ops);
         }
     else if (two > one && two > three && one < three)
         if (stack_size(*a) == 3)
-            rotate(a, coms);
+            rotate(a, ops);
         else
         {
-            swap(a, coms);
-            rotate(a ,coms);
-            swap(a, coms);
-            reverse(a, coms);
+            swap(a, ops);
+            rotate(a ,ops);
+            swap(a, ops);
+            reverse(a, ops);
         }
     else if (two > one && two > three && one > three)
-        swap(a, coms);
+        swap(a, ops);
     else if (three > one && three > two && one > two)
         if (stack_size(*a) == 3)
-            reverse(a, coms);
+            reverse(a, ops);
         else
         {
-            rotate(a, coms);
-            swap(a, coms);
-            reverse(a, coms);
-            swap(a, coms);
+            rotate(a, ops);
+            swap(a, ops);
+            reverse(a, ops);
+            swap(a, ops);
         }
     else if (three > one && three > two && one < two)
     {
         if (stack_size(*a) == 3)
         {
-            swap(a, coms);
-            reverse(a, coms);
+            swap(a, ops);
+            reverse(a, ops);
         }
         else
         {
-            swap(a, coms);
-            rotate(a, coms);
-            swap(a, coms);
-            reverse(a, coms);
-            swap(a, coms);
+            swap(a, ops);
+            rotate(a, ops);
+            swap(a, ops);
+            reverse(a, ops);
+            swap(a, ops);
         }
     }
 }
 
-static int	split(t_stack **a, t_stack **b, int size, int **coms)
+static int	split(t_stack **a, t_stack **b, int size, int **ops)
 {
 	int pivot;
 	int pushed;
@@ -146,39 +146,39 @@ static int	split(t_stack **a, t_stack **b, int size, int **coms)
 		if (((*a)->ab == 'a' && (*a)->place <= pivot) ||
 			((*a)->ab == 'b' && (*a)->place >= pivot))
 		{
-			push(a, b, coms);
-			(*b)->place == pivot ? rotate(b, coms) : ++pushed;
+			push(a, b, ops);
+			(*b)->place == pivot ? rotate(b, ops) : ++pushed;
 		}
 		else
 		{
-			rotate(a, coms);
+			rotate(a, ops);
 			++rotated;
 		}
 	if (stack_size(*a) > rotated)
 		while (rotated--)
-			reverse(a, coms);
+			reverse(a, ops);
 	return (pushed);
 }
 
-void		sort_500(t_stack **a, t_stack **b, int size, int **coms)
+void		sort_500(t_stack **a, t_stack **b, int size, int **ops)
 {
 	int pushed;
 
 	if (size == 2 && (((*a)->ab == 'a' && (*a)->place > (*a)->right->place)
 		|| ((*a)->ab == 'b' && (*a)->place < (*a)->right->place)))
-		swap(a, coms);
+		swap(a, ops);
 	else if (size == 3 && (*a)->ab == 'a')
-		sort_3_ascending(a, coms);
+		sort_3_ascending(a, ops);
 	else if (size == 3 && (*a)->ab == 'b')
-		sort_3_descending(a, coms);
+		sort_3_descending(a, ops);
 	else if (size > 3)
 	{
-		pushed = split(a, b, size, coms);
-		sort_500(a, b, size - pushed - 1, coms);
-		reverse(b, coms);
-		push(b, a, coms);
-		sort_500(b, a, pushed, coms);
+		pushed = split(a, b, size, ops);
+		sort_500(a, b, size - pushed - 1, ops);
+		reverse(b, ops);
+		push(b, a, ops);
+		sort_500(b, a, pushed, ops);
 		while (pushed--)
-			push(b, a, coms);
+			push(b, a, ops);
 	}
 }

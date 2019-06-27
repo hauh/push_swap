@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 15:18:43 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/26 23:24:42 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/27 18:53:30 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,41 +44,18 @@ t_stack	*store_stack(int *arr, int size)
 	return (head);
 }
 
-int		stack_size(t_stack *s)
+void	mark_stack(t_stack *a, int *arr, int size)
 {
-	t_stack	*head;
-	int		size;
+	int i;
 
-	size = 0;
-	if (s)
+	i = 1;
+	while (size--)
 	{
-		++size;
-		head = s;
-		s = s->right;
-		while (s != head)
-		{
-			++size;
-			s = s->right;
-		}
+		while (a->n != *arr)
+			a = a->right;
+		a->place = i++;
+		++arr;
 	}
-	return (size);
-}
-
-int		is_sorted(t_stack *s, int size)
-{
-	t_stack *r;
-
-	r = s;
-	r = r->right;
-	--size;
-	while (r != s && r->place > r->left->place)
-	{
-		r = r->right;
-		--size;
-	}
-	if (size != 0)
-		return (0);
-	return (1);
 }
 
 void	free_stack(t_stack *s)

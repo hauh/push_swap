@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 20:17:48 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/27 00:11:00 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/28 00:28:35 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,7 @@ void	checker(t_stack **a, int flag)
 		else if (ft_strequ(com, "pb"))
 			push(a, &b, NULL);
 		else
-		{
-			ft_printf("Error\n");
-			exit(-1);
-		}
+			error();
 		if (flag)
 			print_stacks(*a, b, com, flag);
 		free(com);
@@ -89,7 +86,7 @@ int	main(int argc, char **argv)
 	int		size;
 	int		flag;
 
-	if (argc-- == 1)
+	if (argc-- < 2)
 		return (0);
 	if ((flag = get_flag(++argv)) > 0)
 	{
@@ -97,10 +94,7 @@ int	main(int argc, char **argv)
 		--argc;
 	}
 	if (!(arr = get_array(argc, argv, &size)))
-	{
-		ft_printf("Error\n");
-		return (-1);
-	}
+		error();
 	a = store_stack(arr, size);
 	sort_array(arr, arr + size - 1);
 	mark_stack(a, arr, size);

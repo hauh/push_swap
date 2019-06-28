@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 16:43:58 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/27 18:57:34 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/28 22:50:50 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,12 @@ int		stack_size(t_stack *s)
 
 int		is_sorted(t_stack *s, int size)
 {
-	t_stack *r;
-
-	r = s;
-	r = r->right;
-	--size;
-	while (r != s && r->place > r->left->place)
+	while (s->place < s->right->place)
 	{
-		r = r->right;
+		s = s->right;
 		--size;
 	}
-	if (size != 0)
+	if (size != 1)
 		return (0);
 	return (1);
 }

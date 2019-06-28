@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 15:18:43 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/27 18:53:30 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/28 17:55:25 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,33 @@
 
 t_stack	*new_stack(int n)
 {
-	t_stack *st;
+	t_stack *s;
 
-	st = (t_stack *)malloc(sizeof(t_stack));
-	st->n = n;
-	st->place = 0;
-	st->right = NULL;
-	st->left = NULL;
-	return (st);
+	s = (t_stack *)malloc(sizeof(t_stack));
+	s->n = n;
+	s->place = 0;
+	s->right = NULL;
+	s->left = NULL;
+	return (s);
 }
 
 t_stack	*store_stack(int *arr, int size)
 {
-	t_stack *a;
+	t_stack *s;
 	t_stack *head;
 
-	head = new_stack(*arr++);
-	head->ab = 'a';
-	a = head;
+	s = new_stack(*arr++);
+	s->ab = 'a';
+	head = s;
 	while (--size)
 	{
-		a->right = new_stack(*arr++);
-		a->right->left = a;
-		a->right->ab = 'a';
-		a = a->right;
+		s->right = new_stack(*arr++);
+		s->right->left = s;
+		s->right->ab = 'a';
+		s = s->right;
 	}
-	a->right = head;
-	head->left = a;
+	s->right = head;
+	head->left = s;
 	return (head);
 }
 
@@ -58,14 +58,12 @@ void	mark_stack(t_stack *a, int *arr, int size)
 	}
 }
 
-void	free_stack(t_stack *s)
+void	free_stack(t_stack *s, int size)
 {
-	while (s->right)
+	while (--size)
 	{
 		s = s->right;
 		free(s->left);
-		s->left = NULL;
 	}
 	free(s);
-	s = NULL;
 }

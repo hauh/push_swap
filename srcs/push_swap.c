@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 18:59:30 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/28 00:22:01 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/28 22:43:25 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,13 @@ void	sort(t_stack **a, int size, int *ops)
 	else
 		sort_500(a, &b, size, &p);
 	*p = -1;
-	free(b);
+	while (b)
+		push(&b, a, NULL);
 }
 
 void	print_ops(int *ops)
 {
-	while (*ops != -1)
+	while (*ops++ != -1)
 	{
 		if (*ops == SA)
 			ft_printf("sa\n");
@@ -58,7 +59,6 @@ void	print_ops(int *ops)
 			ft_printf("rr\n");
 		else if (*ops == RRR)
 			ft_printf("rrr\n");
-		++ops;
 	}
 }
 
@@ -84,7 +84,7 @@ int		main(int argc, char **argv)
 		optimize_ops(ops);
 		print_ops(ops);
 	}
-	free(a);
+	free_stack(a, size);
 	free(arr);
 	free(ops);
 	return (0);

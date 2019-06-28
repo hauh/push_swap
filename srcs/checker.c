@@ -6,101 +6,134 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 20:17:48 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/28 00:28:35 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/28 23:01:32 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	checker(t_stack **a, int flag)
+static void	checker_operate(t_stack **a, t_stack **b, char *op)
+{
+	if (ft_strequ(op, "sa") || ft_strequ(op, "sb"))
+		*(op + 1) == 'a' ? swap(a, NULL) : swap(b, NULL);
+	else if (ft_strequ(op, "ss"))
+	{
+		swap(a, NULL);
+		swap(b, NULL);
+	}
+	else if (ft_strequ(op, "ra") || ft_strequ(op, "rb"))
+		*(op + 1) == 'a' ? rotate(a, NULL) : rotate(b, NULL);
+	else if (ft_strequ(op, "rr"))
+	{
+		rotate(a, NULL);
+		rotate(b, NULL);
+	}
+	else if (ft_strequ(op, "rra") || ft_strequ(op, "rrb"))
+		*(op + 2) == 'a' ? reverse(a, NULL) : reverse(b, NULL);
+	else if (ft_strequ(op, "rrr"))
+	{
+		reverse(a, NULL);
+		reverse(b, NULL);
+	}
+	else if (ft_strequ(op, "pa") || ft_strequ(op, "pb"))
+		*(op + 1) == 'a' ? push(b, a, NULL) : push(a, b, NULL);
+	else
+		error();
+}
+
+static int	checker(t_stack **a, int fd, int flag, int size)
 {
 	t_stack	*b;
-	char	*com;
+	char	*op;
+	int		gnl;
 
 	b = NULL;
 	if (flag)
 		print_stacks(*a, b, "   ", flag);
-	while (get_next_line(0, &com))
+	while ((gnl = get_next_line(fd, &op)) > 0)
 	{
-		if (ft_strequ(com, "sa"))
-			swap(a, NULL);
-		else if (ft_strequ(com, "sb"))
-			swap(&b, NULL);
-		else if (ft_strequ(com, "ss"))
-		{
-			swap(a, NULL);
-			swap(&b, NULL);
-		}
-		else if (ft_strequ(com, "ra"))
-			rotate(a, NULL);
-		else if (ft_strequ(com, "rb"))
-			rotate(&b, NULL);
-		else if (ft_strequ(com, "rr"))
-		{
-			rotate(a, NULL);
-			rotate(&b, NULL);
-		}
-		else if (ft_strequ(com, "rra"))
-			reverse(a, NULL);
-		else if (ft_strequ(com, "rrb"))
-			reverse(&b, NULL);
-		else if (ft_strequ(com, "rrr"))
-		{
-			reverse(a, NULL);
-			reverse(&b, NULL);
-		}
-		else if (ft_strequ(com, "pa"))
-			push(&b, a, NULL);
-		else if (ft_strequ(com, "pb"))
-			push(a, &b, NULL);
-		else
-			error();
+		checker_operate(a, &b, op);
+		free(op);
 		if (flag)
-			print_stacks(*a, b, com, flag);
-		free(com);
+			print_stacks(*a, b, op, flag);
 	}
+	if (gnl < 0)
+		error();
+	if (b || !is_sorted(*a, size))
+	{
+		while (b)
+			push(&b, a, NULL);
+		return (0);
+	}
+	return (1);
 }
 
-int	get_flag(char **argv)
+static int	get_flag(char *arg)
 {
 	int flag;
 
-	if (**argv != '-' || (*(*argv + 1) > '0' && *(*argv + 1) < '9'))
-		return (0);
-	if (*(*argv + 1) == 'n')
-		flag = 10 + (*(*argv + 2) ? *(*argv + 2) - '0' : 0);
-	else if (*(*argv + 1) == 'v')
-		flag = 20 + (*(*argv + 2) ? *(*argv + 2) - '0' : 0);
-	else
+	flag = 0;
+	while (*arg)
 	{
-//		usage();
-		exit(0);
+		if (*arg == 'n' && flag % 100 == 0)
+		{
+			flag += 10;
+			if (*(arg + 1) > '0' && *(arg + 1) <= '9')
+				flag += *++arg - '0';
+		}
+		else if (*arg == 'v' && flag % 100 == 0)
+		{
+			flag += 20;
+			if (*(arg + 1) > '0' && *(arg + 1) <= '9')
+				flag += *++arg - '0';
+		}
+		else if (*arg == 'f' && flag < 100)
+			flag += 100;
+		else
+			error();
+		++arg;
 	}
 	return (flag);
 }
 
-int	main(int argc, char **argv)
+static int	check_flag(char ***argv, int *flag, int *fd)
+{
+	++*argv;
+	*flag = 0;
+	if (***argv != '-' || (*(**argv + 1) > '0' && *(**argv + 1) < '9'))
+		return (0);
+	*flag = get_flag(++*(*argv)++);
+	if (*flag >= 100)
+	{
+		if ((*fd = open(*(*argv)++, O_RDONLY)) < 0)
+			error();
+		*flag -= 100;
+		return (2);
+	}
+	else
+		*fd = 0;
+	return (1);
+}
+
+int			main(int argc, char **argv)
 {
 	t_stack *a;
 	int		*arr;
 	int		size;
 	int		flag;
+	int		fd;
 
-	if (argc-- < 2)
+	if (argc-- < 2 || (argc -= check_flag(&argv, &flag, &fd)) < 1)
 		return (0);
-	if ((flag = get_flag(++argv)) > 0)
-	{
-		++argv;
-		--argc;
-	}
 	if (!(arr = get_array(argc, argv, &size)))
 		error();
 	a = store_stack(arr, size);
 	sort_array(arr, arr + size - 1);
 	mark_stack(a, arr, size);
-	checker(&a, flag);
-	ft_printf(a && is_sorted(a, size) ? "OK\n" : "KO\n");
+	ft_printf(checker(&a, fd, flag, size) ? "OK\n" : "KO\n");
+	if (fd)
+		close(fd);
+	free_stack(a, size);
 	free(arr);
-	free(a);
 	return (0);
 }

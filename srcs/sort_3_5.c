@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   solve_small.c                                      :+:      :+:    :+:   */
+/*   sort_3_5.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 22:20:39 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/28 00:08:14 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/28 23:06:21 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	sort_5(t_stack **a, t_stack **b, int size, int **ops)
 				push(a, b, ops);
 				--i;
 			}
-			else if	((*a)->left->place <= top)
+			else if ((*a)->left->place <= top)
 				reverse(a, ops);
 			else
 				rotate(a, ops);

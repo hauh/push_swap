@@ -6,13 +6,13 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 18:59:30 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/28 22:43:25 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/29 21:20:15 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sort(t_stack **a, int size, int *ops)
+static void	sort(t_stack **a, int size, int *ops)
 {
 	t_stack	*b;
 	int		*p;
@@ -33,7 +33,7 @@ void	sort(t_stack **a, int size, int *ops)
 		push(&b, a, NULL);
 }
 
-void	print_ops(int *ops)
+static void	print_ops(int *ops)
 {
 	while (*ops++ != -1)
 	{
@@ -62,7 +62,7 @@ void	print_ops(int *ops)
 	}
 }
 
-int		main(int argc, char **argv)
+int			main(int argc, char **argv)
 {
 	t_stack *a;
 	int		size;
@@ -77,15 +77,15 @@ int		main(int argc, char **argv)
 	a = store_stack(arr, size);
 	sort_array(arr, arr + size - 1);
 	mark_stack(a, arr, size);
-	ops = (int *)malloc(sizeof(int) * (size * size + 1));
 	if (!is_sorted(a, size))
 	{
+		ops = (int *)malloc(sizeof(int) * (size * size + 1));
 		sort(&a, size, ops);
 		optimize_ops(ops);
 		print_ops(ops);
+		free(ops);
 	}
 	free_stack(a, size);
 	free(arr);
-	free(ops);
 	return (0);
 }

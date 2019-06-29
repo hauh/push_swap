@@ -6,14 +6,13 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 14:40:26 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/28 16:50:49 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/29 21:27:52 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include <stdlib.h>
 # include "libft/libft.h"
 # include "ft_printf/includes/ft_printf.h"
 # include "get_next_line/get_next_line.h"
@@ -39,27 +38,25 @@ typedef struct	s_stack
 	struct s_stack	*left;
 }				t_stack;
 
-int				check_args(int argc, char **argv);
 int				*get_array(int argc, char **argv, int *size);
-t_stack			*new_stack(int n);
-t_stack			*store_stack(int *arr, int size);
-void			free_stack(t_stack *s, int size);
 void			sort_array(int *begin, int *end);
+t_stack			*store_stack(int *arr, int size);
 void			mark_stack(t_stack *a, int *arr, int size);
-void			print_stacks(t_stack *a, t_stack *b, char *com, int flag);
-void			swap(t_stack **st, int **ops);
-void			push(t_stack **a, t_stack **b, int **ops);
-void			rotate(t_stack **st, int **ops);
-void			reverse(t_stack **st, int **ops);
-int				is_sorted(t_stack *s, int size);
-int				find_lowest(t_stack *a, int size);
-int				find_highest(t_stack *a, int size);
-int				stack_size(t_stack *a);
 void			sort_3(t_stack **s, int **ops);
 void			sort_5(t_stack **a, t_stack **b, int size, int **ops);
 void			sort_100(t_stack **a, t_stack **b, int size, int **ops);
 void			sort_500(t_stack **a, t_stack **b, int high, int **ops);
+void			print_stacks(t_stack *a, t_stack *b, char *com, int flag);
+void			swap(t_stack **s, int **ops);
+void			push(t_stack **a, t_stack **b, int **ops);
+void			rotate(t_stack **s, int **ops);
+void			reverse(t_stack **s, int **ops);
+int				is_sorted(t_stack *s, int size);
+int				find_lowest(t_stack *a, int size);
+int				find_highest(t_stack *a, int size);
+int				stack_size(t_stack *a);
 void			optimize_ops(int *ops);
+void			free_stack(t_stack *s, int size);
 void			error(void);
 
 #endif

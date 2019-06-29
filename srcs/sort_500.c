@@ -6,12 +6,24 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/17 16:37:39 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/28 22:42:11 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/29 21:45:35 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
+/*
+static void sort_3(t_stack **s, int **ops)
+{
+	while (!is_sorted(*s, 3))
+	{
+		if ((*s)->place < (*s)->right->place && (*s)->place < (*s)->right->right->place)
+		{
+			rotate(s, ops);
+			swap(s, ops);
+			reverse(s, ops);
+		}
+	}
+}*/
 static void	sort_3_ascending(t_stack **a, int **ops)
 {
 	int one;
@@ -23,7 +35,7 @@ static void	sort_3_ascending(t_stack **a, int **ops)
 	three = (*a)->right->right->place;
 	if (one > two && one > three && two < three)
 		if (stack_size(*a) == 3)
-			swap(a, ops);
+			rotate(a, ops);
 		else
 		{
 			swap(a, ops);

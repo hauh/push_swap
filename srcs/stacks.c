@@ -6,13 +6,13 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 15:18:43 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/28 17:55:25 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/29 21:23:55 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_stack	*new_stack(int n)
+static t_stack	*new_stack(int n)
 {
 	t_stack *s;
 
@@ -24,7 +24,7 @@ t_stack	*new_stack(int n)
 	return (s);
 }
 
-t_stack	*store_stack(int *arr, int size)
+t_stack			*store_stack(int *arr, int size)
 {
 	t_stack *s;
 	t_stack *head;
@@ -44,7 +44,7 @@ t_stack	*store_stack(int *arr, int size)
 	return (head);
 }
 
-void	mark_stack(t_stack *a, int *arr, int size)
+void			mark_stack(t_stack *a, int *arr, int size)
 {
 	int i;
 
@@ -58,7 +58,7 @@ void	mark_stack(t_stack *a, int *arr, int size)
 	}
 }
 
-void	free_stack(t_stack *s, int size)
+void			free_stack(t_stack *s, int size)
 {
 	while (--size)
 	{

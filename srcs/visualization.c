@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 20:30:41 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/26 16:53:01 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/29 20:51:46 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,18 @@ static void	print_numbers(t_stack *a, t_stack *b)
 	{
 		if (ta)
 		{
-			ft_printf("|%10d   |", ta->n);
+			ft_printf("|%11d  |", ta->n);
 			ta = (ta->right == a ? NULL : ta->right);
 		}
 		else
-			ft_printf("|             |");
+			ft_printf("|%14|");
 		if (tb)
 		{
-			ft_printf("|%10d   |\n", tb->n);
+			ft_printf("|%11d  |\n", tb->n);
 			tb = (tb->right == b ? NULL : tb->right);
 		}
 		else
-			ft_printf("|             |\n");
+			ft_printf("|%14|\n");
 	}
 }
 
@@ -48,28 +48,22 @@ static void	print_graphic(t_stack *a, t_stack *b, int width)
 	tb = b;
 	while (ta || tb)
 	{
-		if (ta)
-		{
-			ft_printf("| {green}");
-			len = 0;
-			while (len++ < ta->place)
-				ft_printf("■");
-			ft_printf("{eoc} %*|", width - ta->place);
-			ta = (ta->right == a ? NULL : ta->right);
-		}
-		else
-			ft_printf("|%*|", width + 2);
-		if (tb)
-		{
-			ft_printf("| {yellow}");
-			len = 0;
-			while (len++ < tb->place)
-				ft_printf("■");
-			ft_printf("{eoc} %*|\n", width - tb->place);
-			tb = (tb->right == b ? NULL : tb->right);
-		}
-		else
-			ft_printf("|%*|\n", width + 2);
+		ft_printf("| {green}");
+		len = ta ? 0 : 1;
+		while (ta && len++ < ta->place)
+			ft_printf("■");
+		while (len++ <= width)
+			ft_printf(" ");
+		ft_printf("{eoc}|");
+		ta = (ta && ta->right != a ? ta->right : NULL);
+		ft_printf("| {yellow}");
+		len = tb ? 0 : 1;
+		while (tb && len++ < tb->place)
+			ft_printf("■");
+		while (len++ <= width)
+			ft_printf(" ");
+		ft_printf("{eoc}|\n");
+		tb = (tb && tb->right != b ? tb->right : NULL);
 	}
 }
 
@@ -95,31 +89,25 @@ void		print_stacks(t_stack *a, t_stack *b, char *com, int flag)
 {
 	static int	count = 0;
 	static int	width = 0;
-	int			s;
+	int			i;
 
 	ft_printf("\e[?25l\e[H");
 	if (!width)
-	{
-		ft_printf("\e[J");
-		width = (flag / 10 == 1 ? 12 : stack_size(a) + 1);
-		if (width < 7)
+		if ((width = (flag / 10 == 1 ? 12 : stack_size(a) + 1)) < 7)
 			width = 7;
-	}
-	s = width - 5;
-	while (s--)
+	i = width - 5;
+	while (i--)
 		ft_printf("𝌃");
 	ft_printf(" Operation: %3s ", com);
-	s = width - 5;
-	while (s--)
+	while (i++ < width - 6)
 		ft_printf("𝌃");
 	ft_printf("\n");
 	flag / 10 == 1 ? print_numbers(a, b) : print_graphic(a, b, width);
-	s = width - 4;
-	while (s--)
+	i = width - 4;
+	while (i--)
 		ft_printf("𝌃");
 	ft_printf(" Moves: %5d ", count++);
-	s = width - 4;
-	while (s--)
+	while (i++ < width - 5)
 		ft_printf("𝌃");
 	ft_printf("\n\e[J\e[?25h");
 	delay(flag);

@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 17:00:23 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/28 17:55:20 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/29 20:08:46 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,16 @@ int			*get_array(int argc, char **argv, int *size)
 
 void		sort_array(int *begin, int *end)
 {
-	int	*left;
-	int	*right;
-	int	pivot;
-	int swp;
+	long long	pivot;
+	int			*left;
+	int			*right;
+	int			swp;
 
 	left = begin;
 	right = end;
-	pivot = (*left + *right) / 2;
+	pivot = *left;
+	pivot += *right;
+	pivot = pivot / 2 + pivot % 2;
 	while (left <= right)
 	{
 		while (*left <= pivot)
@@ -113,8 +115,6 @@ void		sort_array(int *begin, int *end)
 			*right = swp;
 		}
 	}
-	if (begin < right && right != end)
-		sort_array(begin, right);
-	if (end > left && left != begin)
-		sort_array(left, end);
+	begin < right && right != end ? sort_array(begin, right) : 0;
+	end > left && left != begin ? sort_array(left, end) : 0;
 }

@@ -6,7 +6,7 @@
 #    By: smorty <smorty@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/07 23:29:04 by smorty            #+#    #+#              #
-#    Updated: 2019/06/28 22:42:42 by smorty           ###   ########.fr        #
+#    Updated: 2019/06/29 20:04:14 by smorty           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,14 +38,6 @@ CC = gcc -Wall -Werror -Wextra
 
 all: $(NAME1) $(NAME2)
 
-$(LFT):
-	@$(MAKE) -C $(LFTDIR)
-	@$(MAKE) -C $(LFTDIR) clean
-
-$(LFTPRINTF):
-	@$(MAKE) -C $(LFTPRINTFDIR)
-	@$(MAKE) -C $(LFTPRINTFDIR) clean
-
 $(NAME1): $(OBJ1) $(LFT) $(LFTPRINTF)
 	@$(CC) -L$(LFTDIR) -lft -L$(LFTPRINTFDIR) -lftprintf $^ -o $@
 	@echo "$(NAME1) done!"
@@ -53,6 +45,14 @@ $(NAME1): $(OBJ1) $(LFT) $(LFTPRINTF)
 $(NAME2): $(OBJ2) $(LFT) $(LFTPRINTF)
 	@$(CC) -L$(LFTDIR) -lft -L$(LFTPRINTFDIR) -lftprintf $^ -o $@
 	@echo "$(NAME2) done!"
+
+$(LFT):
+	@$(MAKE) -C $(LFTDIR)
+	@$(MAKE) -C $(LFTDIR) clean
+
+$(LFTPRINTF):
+	@$(MAKE) -C $(LFTPRINTFDIR)
+	@$(MAKE) -C $(LFTPRINTFDIR) clean
 
 $(OBJDIR)%.o: %.c
 	@mkdir -p '$(@D)'

@@ -6,16 +6,16 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 14:40:26 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/29 21:27:52 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/30 23:39:56 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include "libft/libft.h"
-# include "ft_printf/includes/ft_printf.h"
-# include "get_next_line/get_next_line.h"
+# include "../srcs/libft/libft.h"
+# include "../srcs/ft_printf/includes/ft_printf.h"
+# include "../srcs/get_next_line/get_next_line.h"
 
 # define SA 1
 # define RA 10
@@ -58,5 +58,7 @@ int				stack_size(t_stack *a);
 void			optimize_ops(int *ops);
 void			free_stack(t_stack *s, int size);
 void			error(void);
+
+void	sort_3_ascending(t_stack **s, int **ops);
 
 #endif

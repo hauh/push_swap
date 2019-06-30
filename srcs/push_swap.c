@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 18:59:30 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/29 21:20:15 by smorty           ###   ########.fr       */
+/*   Updated: 2019/07/01 00:28:59 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static void	sort(t_stack **a, int size, int *ops)
 		sort_100(a, &b, size, &p);
 	else
 		sort_500(a, &b, size, &p);
+//	sort_3_ascending(a, &p);
+	size = 0;
 	*p = -1;
 	while (b)
 		push(&b, a, NULL);

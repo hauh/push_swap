@@ -6,7 +6,7 @@
 #    By: smorty <smorty@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/07 23:29:04 by smorty            #+#    #+#              #
-#    Updated: 2019/06/29 20:04:14 by smorty           ###   ########.fr        #
+#    Updated: 2019/06/30 19:16:38 by smorty           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ LFTPRINTFDIR = $(SRCDIR)ft_printf/
 
 LFTPRINTF = $(LFTPRINTFDIR)libftprintf.a
 
-SRCS1 = $(addprefix $(SRCDIR),push_swap.c utility.c array.c operators.c stacks.c sort_3_5.c sort_100.c sort_500.c optimization.c visualization.c)
+SRCS1 = $(addprefix $(SRCDIR),push_swap.c utility.c array.c operators.c stacks.c sort_3_5.c sort_100.c sort_500.c optimization.c)
 
 SRCS2 = $(addprefix $(SRCDIR),checker.c utility.c array.c operators.c stacks.c visualization.c get_next_line/get_next_line.c)
 
@@ -56,7 +56,7 @@ $(LFTPRINTF):
 
 $(OBJDIR)%.o: %.c
 	@mkdir -p '$(@D)'
-	@$(CC) -c $< -o $@
+	@$(CC) -I./include -c $< -o $@
 
 clean:
 	@rm -rf $(OBJDIR)

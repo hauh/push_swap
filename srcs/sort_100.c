@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 22:15:20 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/27 20:28:46 by smorty           ###   ########.fr       */
+/*   Updated: 2019/06/30 19:16:48 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,10 @@ void		sort_100(t_stack **a, t_stack **b, int size, int **ops)
 {
 	int count;
 
-	if (size < 4)
+	if (size <= 3)
 		sort_3(a, ops);
+	else if (size <= 5)
+		sort_5(a, b, size, ops);
 	else
 	{
 		count = split(a, b, size, ops);

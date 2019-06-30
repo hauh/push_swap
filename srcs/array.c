@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 17:00:23 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/29 20:08:46 by smorty           ###   ########.fr       */
+/*   Updated: 2019/07/01 00:25:09 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,31 +90,52 @@ int			*get_array(int argc, char **argv, int *size)
 	return (arr);
 }
 
+static int	get_median(int *begin, int *end, int *pivot)
+{
+	if (end - begin < 1)
+		return (0);
+	if (end - begin == 1)
+	{
+		if (*begin > *end)
+		{
+			*pivot = *begin;
+			*begin = *end;
+			*end = *pivot;
+		}
+		return (0);
+	}
+	*pivot = *(begin + (end - begin) / 2);
+	if ((*pivot > *end && *end > *begin) || (*pivot < *end && *end < *begin))
+		*pivot = *end;
+	else if ((*pivot > *begin && *begin > *end) || (*pivot < *begin && *begin < *end))
+		*pivot = *begin;
+	return (1);
+}
+
 void		sort_array(int *begin, int *end)
 {
-	long long	pivot;
-	int			*left;
-	int			*right;
-	int			swp;
+	int pivot;
+	int *left;
+	int *right;
+	int swp;
 
+	if (!get_median(begin, end, &pivot))
+		return ;
 	left = begin;
 	right = end;
-	pivot = *left;
-	pivot += *right;
-	pivot = pivot / 2 + pivot % 2;
 	while (left <= right)
 	{
-		while (*left <= pivot)
+		if (*left < pivot)
 			++left;
-		while (*right > pivot)
+		else if (*right > pivot)
 			--right;
-		if (left < right)
+		else
 		{
 			swp = *left;
-			*left = *right;
-			*right = swp;
+			*left++ = *right;
+			*right-- = swp;
 		}
 	}
-	begin < right && right != end ? sort_array(begin, right) : 0;
-	end > left && left != begin ? sort_array(left, end) : 0;
+	sort_array(begin, right);
+	sort_array(left - 1, end);
 }

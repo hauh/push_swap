@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 22:20:39 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/28 23:06:21 by smorty           ###   ########.fr       */
+/*   Updated: 2019/07/01 00:26:41 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,32 +28,23 @@ void	sort_3(t_stack **s, int **ops)
 
 void	sort_5(t_stack **a, t_stack **b, int size, int **ops)
 {
-	int i;
-	int top;
-
-	if (!is_sorted(*a, size))
+	while (stack_size(*a) > 3)
 	{
-		i = (size == 5 ? 2 : 1);
-		top = find_lowest(*a, size) + i - 1;
-		while (i)
-		{
-			if ((*a)->place <= top)
-			{
-				push(a, b, ops);
-				--i;
-			}
-			else if ((*a)->left->place <= top)
-				reverse(a, ops);
-			else
-				rotate(a, ops);
-		}
-		sort_3(a, ops);
-		if (size == 5)
-		{
-			if ((*b)->place < (*b)->right->place)
-				swap(b, ops);
-			push(b, a, ops);
-		}
+		if (is_sorted(*a, size))
+			return ;
+		else if ((*a)->place < size - 2)
+			push(a, b, ops);
+		else if ((*a)->left->place < size - 2)
+			reverse(a, ops);
+		else
+			rotate(a, ops);
+	}
+	sort_3(a, ops);
+	if (size == 5)
+	{
+		if ((*b)->place < (*b)->right->place)
+			swap(b, ops);
 		push(b, a, ops);
 	}
+	push(b, a, ops);
 }

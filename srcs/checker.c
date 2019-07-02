@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 20:17:48 by smorty            #+#    #+#             */
-/*   Updated: 2019/07/02 21:40:53 by smorty           ###   ########.fr       */
+/*   Updated: 2019/07/02 23:44:21 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	checker(t_stack **a, int fd, int flag, int size)
 	}
 	if (gnl < 0)
 		error();
-	if (is_sorted(*a, size))
+	if (*a && is_sorted(*a, size))
 		return (1);
 	while (b)
 		push(&b, a, NULL);

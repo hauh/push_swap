@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 17:00:23 by smorty            #+#    #+#             */
-/*   Updated: 2019/07/01 00:25:09 by smorty           ###   ########.fr       */
+/*   Updated: 2019/07/02 15:29:18 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ static int	get_median(int *begin, int *end, int *pivot)
 	*pivot = *(begin + (end - begin) / 2);
 	if ((*pivot > *end && *end > *begin) || (*pivot < *end && *end < *begin))
 		*pivot = *end;
-	else if ((*pivot > *begin && *begin > *end) || (*pivot < *begin && *begin < *end))
+	else if ((*pivot > *begin && *begin > *end)
+		|| (*pivot < *begin && *begin < *end))
 		*pivot = *begin;
 	return (1);
 }

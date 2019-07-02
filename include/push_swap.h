@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 14:40:26 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/30 23:39:56 by smorty           ###   ########.fr       */
+/*   Updated: 2019/07/02 16:37:19 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,5 @@ int				stack_size(t_stack *a);
 void			optimize_ops(int *ops);
 void			free_stack(t_stack *s, int size);
 void			error(void);
-
-void	sort_3_ascending(t_stack **s, int **ops);
 
 #endif

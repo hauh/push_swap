@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 17:00:23 by smorty            #+#    #+#             */
-/*   Updated: 2019/07/02 15:29:18 by smorty           ###   ########.fr       */
+/*   Updated: 2019/07/02 21:40:32 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	*get_array_single_arg(char **arg, int *size)
 		*arr = get_number(*arg);
 	*size = i;
 	while (i)
-		free(arg[i--]);
+		free(arg[--i]);
 	free(arg);
 	return (arr);
 }

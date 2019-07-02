@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 20:17:48 by smorty            #+#    #+#             */
-/*   Updated: 2019/06/29 20:59:53 by smorty           ###   ########.fr       */
+/*   Updated: 2019/07/02 21:40:53 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ static int	get_flag(char *arg)
 static int	check_flag(char ***argv, int *flag, int *fd)
 {
 	++*argv;
+	*fd = 0;
 	*flag = 0;
 	if (***argv != '-' || (*(**argv + 1) > '0' && *(**argv + 1) <= '9'))
 		return (0);
@@ -111,8 +112,6 @@ static int	check_flag(char ***argv, int *flag, int *fd)
 		*flag -= 100;
 		return (2);
 	}
-	else
-		*fd = 0;
 	return (1);
 }
 

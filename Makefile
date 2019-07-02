@@ -6,7 +6,7 @@
 #    By: smorty <smorty@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/07 23:29:04 by smorty            #+#    #+#              #
-#    Updated: 2019/07/02 17:02:32 by smorty           ###   ########.fr        #
+#    Updated: 2019/07/02 22:08:44 by smorty           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ LFTPRINTF = $(LFTPRINTFDIR)libftprintf.a
 
 SRCS1 = $(addprefix $(SRCDIR),push_swap.c utility.c array.c operators.c stacks.c sort_3_5.c sort_100.c sort_500.c optimization.c)
 
-SRCS2 = $(addprefix $(SRCDIR),checker.c utility.c array.c operators.c stacks.c visualization.c get_next_line/get_next_line.c)
+SRCS2 = $(addprefix $(SRCDIR),checker.c utility.c array.c operators.c stacks.c visualization.c get_next_line.c)
 
 OBJ1 = $(SRCS1:%.c=$(OBJDIR)%.o)
 

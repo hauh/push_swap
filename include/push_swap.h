@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 14:40:26 by smorty            #+#    #+#             */
-/*   Updated: 2019/07/02 16:37:19 by smorty           ###   ########.fr       */
+/*   Updated: 2019/07/02 22:08:19 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "../srcs/libft/libft.h"
 # include "../srcs/ft_printf/includes/ft_printf.h"
-# include "../srcs/get_next_line/get_next_line.h"
+# include "get_next_line.h"
 
 # define SA 1
 # define RA 10
